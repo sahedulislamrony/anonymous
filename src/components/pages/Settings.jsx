@@ -14,7 +14,6 @@ export default function Settings() {
     async function handleLogout() {
         // add a confirmation dialog 
         await dispatch(logout());
-        console.log("Logout");
         navigate("/login");
     }
     return (
@@ -37,7 +36,6 @@ export default function Settings() {
             </SettingCard>
 
             <SettingCard icon="warning" label="Danger zone" danger={true}>
-                <SettingItem icon="history_2" label="Clear history" action={true} danger={true}/>
                 <SettingItem icon="logout" label="Logout" action={true} danger={true} onClick={handleLogout}/>
                 <SettingItem icon="delete" label="Delete account" action={true} danger={true} />
             </SettingCard>
