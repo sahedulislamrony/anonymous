@@ -1,0 +1,53 @@
+@use "root" as *;
+
+.content_box {
+  margin-top: 4rem;
+  height: 24rem;
+  width: 100%;
+
+  .slider {
+    width: 100%;
+    height: calc(100% - 3rem);
+    position: relative;
+
+    .slide {
+      position: absolute;
+      top: 0;
+      left: 0;
+
+      width: 100%;
+      height: fit-content;
+      display: grid;
+      place-items: center;
+      opacity: 0;
+      transition: opacity 0.2s ease;
+
+      &.active {
+        opacity: 1;
+      }
+    }
+  }
+
+  .slideNavigator {
+    width: 100%;
+    height: 3rem;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: row;
+
+    span {
+      cursor: pointer;
+      @include circle(0.8rem);
+      background: #00000090;
+      margin-left: 1rem;
+
+      &:first-child {
+        margin-left: 0;
+      }
+      &.active {
+        background: #0a77b6;
+      }
+    }
+  }
+}

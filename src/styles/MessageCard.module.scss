@@ -1,0 +1,174 @@
+@use "root" as *;
+
+@property --angle {
+  syntax: "<angle>";
+  inherits: false;
+  initial-value: 0deg;
+}
+
+.content {
+  width: 83%;
+  height: fit-content;
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-start;
+  align-items: center;
+  border-radius: $curve;
+  position: relative;
+
+  &::before,
+  &:after {
+    z-index: 22;
+    content: "";
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    width: 100%;
+    height: 100%;
+    transform: translate(-50%, -50%);
+    border-radius: $curve;
+    padding: 0.15rem;
+    background-image: conic-gradient(
+      from var(--angle),
+      #0ea5e9,
+      #581c87,
+      #8426cb,
+      #0ea5e9
+    );
+    animation: rotate 4900ms linear infinite;
+  }
+  &::before {
+    filter: blur(1.5rem);
+    opacity: 0.3;
+  }
+
+  .title {
+    z-index: 33;
+    flex: 1;
+    border-top-left-radius: 5px;
+    border-top-right-radius: 5px;
+    width: 100%;
+
+    padding: 2rem 0.5rem;
+    background: rgb(0, 158, 255);
+    background: linear-gradient(90deg, rgb(0, 106, 173) 0%, rgb(0, 8, 18) 60%);
+
+    text-align: center;
+    h1 {
+      @include font(600, italic);
+      font-size: 1.8rem;
+      color: $text;
+    }
+  }
+
+  .meta {
+    z-index: 33;
+    flex: 1;
+    width: 100%;
+    @include font(600, normal);
+    color: rgb(165, 163, 163);
+    background-color: $bg-main;
+    font-size: 1.2rem;
+    padding: 2rem 1.5rem;
+    padding-bottom: 1rem;
+    padding-right: 0;
+    border-bottom-left-radius: $curve;
+    border-bottom-right-radius: $curve;
+  }
+
+  .main {
+    z-index: 33;
+    width: 100%;
+    min-height: 10rem;
+    background-color: $bg-main;
+    display: grid;
+    place-items: center;
+
+    .text {
+      @include font(600, normal);
+      white-space: pre-wrap;
+      word-break: break-all;
+      word-wrap: break-word;
+      font-size: 1.6rem;
+      padding: 1rem;
+      text-align: left;
+    }
+  }
+}
+
+.link {
+  margin-top: 2rem;
+  width: 100%;
+  display: flex;
+  justify-content: space-around;
+  align-items: center;
+  flex-direction: column;
+  gap: 1rem;
+
+  .btn {
+    background-color: transparent;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    cursor: pointer;
+    user-select: none;
+
+    padding: 0.8rem;
+
+    .wrapper {
+      border: 0.1rem solid #0a77b6;
+      width: 12rem;
+      height: 3rem;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      background-color: $bg-main;
+      border-radius: $curve;
+
+      &:hover {
+        box-shadow: 0px 0 1rem -3px #0a77b6;
+      }
+      span {
+        color: #0782ce;
+        font-size: 1.8rem;
+      }
+
+      .text {
+        text-transform: capitalize;
+        @include font(400, normal);
+        font-size: 1.3rem;
+      }
+    }
+  }
+  .linkText {
+    border-radius: 0.3rem;
+    display: flex;
+    flex-direction: row;
+    justify-content: flex-start;
+    align-items: center;
+    width: 95%;
+    padding: 0.5rem 1rem;
+    padding-right: 0;
+    @include font(600, italic);
+    font-size: 1.3rem;
+    text-align: center;
+    background-color: #151b238e;
+    color: #0a77b6;
+    overflow: hidden;
+    box-shadow: inset 0px 0px 8px -7px rgba(255, 255, 255, 0.59);
+
+    span:first-child {
+      margin-right: 1rem;
+      user-select: none;
+    }
+  }
+}
+
+@keyframes rotate {
+  0% {
+    --angle: 0deg;
+  }
+  100% {
+    --angle: 360deg;
+  }
+}

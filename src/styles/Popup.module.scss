@@ -1,0 +1,139 @@
+@use "root" as *;
+
+@property --angle {
+  syntax: "<angle>";
+  inherits: false;
+  initial-value: 0deg;
+}
+
+.popup {
+  width: 100dvw;
+  height: 100dvh;
+  position: fixed;
+  top: 0;
+  left: 0;
+  background-color: rgba(0, 0, 0, 0.8);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  z-index: 1111;
+
+  .content {
+    display: grid;
+    place-items: center;
+    position: relative;
+    width: 30rem;
+    height: 30rem;
+
+    .close {
+      z-index: 44;
+      position: absolute;
+
+      padding: 0.2rem;
+      top: 5px;
+      right: 5px;
+      cursor: pointer;
+      @include circle(3rem);
+      box-sizing: content-box;
+      user-select: none;
+      touch-action: manipulation;
+      -webkit-tap-highlight-color: transparent;
+      &:hover {
+        .icon {
+          span {
+            color: #bd1b1b;
+          }
+          &::before {
+            filter: blur(2rem);
+            opacity: 0.3;
+          }
+        }
+      }
+      .icon {
+        @include circle(3rem);
+        position: absolute;
+        top: 50%;
+        left: 50%;
+        transform: translate(-50%, -50%);
+        z-index: 55;
+        background-color: $bg-card;
+        span {
+          color: #0da1f6;
+        }
+      }
+      &::before,
+      &:after {
+        content: "";
+        position: absolute;
+        top: 50%;
+        left: 50%;
+        width: 100%;
+        height: 100%;
+        transform: translate(-50%, -50%);
+        background-image: conic-gradient(
+          from 180deg,
+          #e90d0d,
+          #0a77b6,
+          #e90d0d
+        );
+      }
+    }
+    .bg {
+      box-sizing: content-box;
+      z-index: 22;
+      position: absolute;
+      top: 50%;
+      left: 50%;
+      transform: translate(-50%, -50%);
+      width: 100%;
+      height: 100%;
+
+      &::before,
+      &:after {
+        content: "";
+        position: absolute;
+        top: 50%;
+        left: 50%;
+        width: 100%;
+        height: 100%;
+        transform: translate(-50%, -50%);
+        border-radius: $curve;
+        padding: 0.15rem;
+        background-image: conic-gradient(
+          from var(--angle),
+          #e90d0d,
+          #0a77b6,
+          #e90d0d
+        );
+        animation: rotate 3s linear infinite;
+      }
+      &::before {
+        filter: blur(2rem);
+        opacity: 0.3;
+      }
+    }
+    .main {
+      border-radius: $curve;
+      z-index: 33;
+      background-color: $bg-card;
+      width: 100%;
+      height: fit-content;
+      min-height: 30rem;
+      display: grid;
+      place-items: center;
+    }
+  }
+
+  &.disabled {
+    display: none;
+  }
+}
+
+@keyframes rotate {
+  0% {
+    --angle: 0deg;
+  }
+  100% {
+    --angle: 360deg;
+  }
+}

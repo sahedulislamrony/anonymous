@@ -1,0 +1,41 @@
+// global styles
+
+@use "root" as *;
+
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+
+  -webkit-tap-highlight-color: transparent;
+}
+html {
+  font-size: 62.5%;
+}
+::selection {
+  background-color: #f9f871;
+  color: #333;
+}
+
+body {
+  @include font(400, normal);
+  line-height: 1.6;
+  color: #333;
+}
+a {
+  all: unset;
+  -webkit-tap-highlight-color: transparent;
+  touch-action: manipulation;
+  user-select: none;
+
+  &:hover {
+    all: unset;
+    cursor: pointer;
+  }
+  &:focus,
+  &:active,
+  &:visited {
+    all: unset;
+    outline: none;
+  }
+}

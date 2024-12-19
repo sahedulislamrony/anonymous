@@ -1,0 +1,309 @@
+@use "root" as *;
+@use "breakpoints" as *;
+
+@property --angle {
+  syntax: "<angle>";
+  inherits: false;
+  initial-value: 0deg;
+}
+
+.form {
+  width: 100%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-direction: column;
+  padding: 1.5rem;
+  margin-top: 1rem;
+
+  .formGroup {
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    .label {
+      margin-bottom: 0.5rem;
+      padding-left: 1.3rem;
+
+      display: flex;
+      justify-content: flex-start;
+      align-items: center;
+      width: 100%;
+      height: 5rem;
+      flex-direction: row;
+
+      // background-color: #17fa00;
+      .profilePic {
+        @include circle(4rem);
+        overflow: visible;
+        position: relative;
+        box-sizing: content-box;
+        display: grid;
+        place-items: center;
+
+        .img {
+          z-index: 33;
+          @include circle(4rem);
+          object-fit: cover;
+          object-position: center;
+        }
+        &::before,
+        &:after {
+          z-index: 22;
+          content: "";
+          position: absolute;
+          top: 50%;
+          left: 50%;
+          width: 100%;
+          height: 100%;
+          transform: translate(-50%, -50%);
+          border-radius: 50%;
+          padding: 0.1rem;
+          background-image: conic-gradient(
+            from 0deg,
+            #e90d0d,
+            #0a77b6,
+            #e90d0d
+          );
+        }
+
+        &:hover {
+          &::before {
+            filter: blur(10px);
+            opacity: 0.5;
+          }
+        }
+      }
+      .text {
+        width: 100%;
+        height: 100%;
+        padding-left: 1rem;
+        padding-top: 0.4rem;
+
+        .username {
+          @include Arvo(700, normal);
+          font-size: 1.7rem;
+          word-break: break-all;
+          word-wrap: break-word;
+          display: flex;
+          flex-direction: row;
+          justify-content: flex-start;
+          align-items: center;
+          .text {
+            background-image: linear-gradient(to left, #727272, #ffffff);
+            background-clip: text;
+            color: transparent;
+            width: fit-content;
+          }
+
+          .badge {
+            width: 2.5rem;
+            height: 100%;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            cursor: pointer;
+            user-select: none;
+
+            span {
+              font-size: 1.65rem;
+              color: #facc15;
+            }
+
+            &.verified {
+              span {
+                color: #1da1f2;
+              }
+            }
+          }
+        }
+
+        .meta {
+          @include font(600, italic);
+          font-size: 1.1rem;
+          background-image: linear-gradient(to left, #1a1919, #c0c0c0);
+          background-clip: text;
+          color: transparent;
+        }
+      }
+    }
+
+    .input {
+      position: relative;
+      margin-top: 1.5rem;
+      width: 90%;
+      height: 25rem;
+      border-radius: $curve;
+      margin-bottom: 1rem;
+
+      .bg {
+        box-sizing: content-box;
+        position: absolute;
+        top: 50%;
+        left: 50%;
+        transform: translate(-50%, -50%);
+        width: 100%;
+        height: 100%;
+        border-radius: $curve;
+        z-index: 1;
+
+        &::before,
+        &:after {
+          content: "";
+          position: absolute;
+          top: 50%;
+          left: 50%;
+          width: 100%;
+          height: 100%;
+          transform: translate(-50%, -50%);
+          border-radius: $curve;
+          padding: 0.15rem;
+          background-image: conic-gradient(
+            from var(--angle),
+            #e90dde,
+            #0a77b6,
+            #e90dde
+          );
+          animation: rotate 3s linear infinite;
+        }
+        &::before {
+          filter: blur(1.5rem);
+          opacity: 0.3;
+        }
+      }
+
+      & > textarea {
+        z-index: 3;
+        // display: block;
+        position: absolute;
+        top: 50%;
+        left: 50%;
+        transform: translate(-50%, -50%);
+        width: 100%;
+        height: 100%;
+        color: $text;
+        background-color: $bg-main;
+        resize: none;
+        padding: 1rem;
+        border-radius: $curve;
+        border: none;
+
+        @include font(600, normal);
+        font-size: 1.6rem;
+
+        &:focus {
+          outline: none;
+        }
+        &::placeholder {
+          @include font(600, italic);
+          font-size: 1.6rem;
+          color: #ccc9c9;
+        }
+      }
+    }
+    .button {
+      -webkit-tap-highlight-color: transparent;
+      touch-action: manipulation;
+      margin-top: 3rem;
+      cursor: pointer;
+      width: 85%;
+      height: 5rem;
+      border-radius: $curve;
+      position: relative;
+
+      .content {
+        z-index: 33;
+        display: flex;
+        flex-direction: row;
+        justify-content: center;
+        align-items: center;
+        gap: 0.5rem;
+        position: absolute;
+        top: 50%;
+        left: 50%;
+        transform: translate(-50%, -50%);
+        width: 100%;
+        height: 100%;
+        background-color: $bg-main;
+        border-radius: $curve;
+
+        &:focus,
+        &:active {
+          outline: none;
+        }
+
+        .btn {
+          all: unset;
+          outline: none;
+
+          display: grid;
+          place-items: center;
+
+          @include font(600, normal);
+          font-size: 1, 5rem;
+          text-transform: capitalize;
+          color: $text;
+          border: none;
+        }
+
+        .loader {
+          @include circle(5rem);
+
+          .img {
+            aspect-ratio: 1 / 1;
+            object-fit: cover;
+            object-position: center;
+          }
+        }
+      }
+
+      .bg {
+        position: absolute;
+        top: 50%;
+        left: 50%;
+        transform: translate(-50%, -50%);
+        width: 100%;
+        height: 100%;
+
+        &::before,
+        &:after {
+          z-index: 22;
+          content: "";
+          position: absolute;
+          top: 50%;
+          left: 50%;
+          width: 100%;
+          height: 100%;
+          transform: translate(-50%, -50%);
+          border-radius: $curve;
+          padding: 0.15rem;
+          background-image: conic-gradient(
+            from var(--angle),
+            #e90dde,
+            #0a77b6,
+            #e90dde
+          );
+          animation: rotate 4s linear infinite;
+        }
+      }
+
+      &:hover {
+        cursor: pointer;
+        .bg::before {
+          filter: blur(1.5rem);
+          opacity: 0.3;
+        }
+      }
+    }
+  }
+}
+
+@keyframes rotate {
+  0% {
+    --angle: 0deg;
+  }
+  100% {
+    --angle: 360deg;
+  }
+}

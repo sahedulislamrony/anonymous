@@ -1,0 +1,77 @@
+@use "root" as *;
+
+$box-height: 6rem;
+
+.li {
+  -webkit-tap-highlight-color: transparent;
+  touch-action: manipulation;
+  user-select: none;
+  width: 90%;
+  margin-bottom: 1.5rem;
+  cursor: pointer;
+
+  .content {
+    width: 100%;
+    display: flex;
+    flex-direction: row;
+    border-radius: 0.4rem;
+    background-color: $bg-main;
+
+    .icon {
+      width: 5rem;
+      height: $box-height;
+      display: grid;
+      place-items: center;
+      color: #dbd4d4;
+      span {
+        font-size: 3rem;
+      }
+    }
+
+    .msg {
+      width: calc(100% - 5rem);
+      height: $box-height;
+
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      align-items: flex-start;
+
+      .meta {
+        @include font(400, italic);
+        font-size: 1.1rem;
+        color: #b9b9b9;
+      }
+
+      .text p {
+        @include font(400, normal);
+        font-size: 1.6rem;
+        color: #dbd4d4;
+      }
+    }
+    &:hover {
+      box-shadow: 0 0 1rem -4px rgb(116, 115, 115);
+    }
+  }
+
+  &:hover {
+    outline-offset: none;
+    outline: none;
+  }
+
+  &.unread {
+    .content {
+      &:hover {
+        box-shadow: 0 0 1rem -4px #ec4899;
+      }
+
+      .icon,
+      .msg,
+      .meta,
+      .text p {
+        font-weight: 700;
+        color: #ec4899;
+      }
+    }
+  }
+}

@@ -1,0 +1,16 @@
+// sm , md , lg , xl breakpoints
+@use "sass:map";
+
+$breakpoints: (
+  "sm": "400px",
+  "md": "450px",
+  "lg": "992px",
+  "xl": "1200px",
+);
+
+// media queries
+@mixin respondTo($breakpoint) {
+  @media (min-width: map.get($breakpoints, $breakpoint)) {
+    @content;
+  }
+}

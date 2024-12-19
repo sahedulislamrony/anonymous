@@ -1,0 +1,44 @@
+@use "root" as *;
+@use "breakpoints" as *;
+
+// app classes
+.app {
+  width: 100dvw;
+  height: 100dvh;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  background-color: $bg-main;
+  color: $text;
+
+  // main class
+  // mobile first design
+  .main {
+    width: $app-width;
+    height: 100%;
+    background-color: $bg-card;
+    display: flex;
+    flex-direction: column;
+  }
+
+  .content {
+    width: 100%;
+    height: 100%;
+    overflow-y: scroll;
+    overflow-x: hidden;
+
+    &::-webkit-scrollbar {
+      display: none;
+    }
+    scrollbar-width: none;
+  }
+}
+
+@include respondTo("md") {
+  .app {
+    .main {
+      height: 98vh;
+      border-radius: 0.5rem;
+    }
+  }
+}

@@ -1,0 +1,82 @@
+@use "root" as *;
+
+.profile {
+  width: 100%;
+  height: 100%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-direction: column;
+}
+
+.new {
+  margin-top: 2rem;
+  width: 100%;
+  height: 6rem;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+
+  .btngroup {
+    z-index: 22;
+    width: 80%;
+    height: 4rem;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: row;
+    box-sizing: content-box;
+    position: relative;
+    transform: scale(1);
+    transform-origin: center;
+
+    &::before,
+    &:after {
+      border-radius: $curve;
+      content: "";
+      position: absolute;
+      top: 50%;
+      left: 50%;
+      width: 100%;
+      height: 100%;
+      transform: translate(-50%, -50%);
+      padding: 0.12rem;
+      background-image: conic-gradient(
+        from 0deg,
+        #0284c7,
+        #be123c,
+        #0284c7 40%
+      );
+    }
+    transition: all 0.2s ease;
+    cursor: pointer;
+
+    &:hover {
+      &::before {
+        filter: blur(1rem);
+        opacity: 0.3;
+      }
+    }
+
+    .wrapper {
+      border-radius: $curve;
+      z-index: 33;
+      width: 100%;
+      height: 100%;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      flex-direction: row;
+      background-color: $bg-main;
+
+      span {
+        user-select: none;
+      }
+
+      .btn {
+        all: unset;
+        margin-left: 1rem;
+      }
+    }
+  }
+}

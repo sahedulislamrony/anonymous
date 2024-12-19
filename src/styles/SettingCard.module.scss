@@ -1,0 +1,65 @@
+@use "root" as *;
+
+$padding: 2rem;
+
+.card {
+  padding-top: 1.5rem;
+  padding-bottom: 1.5rem;
+  width: 100%;
+  height: fit-content;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+
+  .header {
+    width: 100%;
+    text-align: left;
+    padding-left: $padding;
+    display: flex;
+    flex-direction: row;
+    justify-content: flex-start;
+    align-items: center;
+
+    .icon {
+      height: 100%;
+      display: grid;
+      place-items: center;
+      user-select: none;
+      color: #d8dfe2;
+      span {
+        font-size: 2.2rem;
+      }
+    }
+    .text {
+      padding-left: 0.5rem;
+
+      @include font(600, normal);
+      font-size: 1.6rem;
+      color: $text;
+      // background-image: linear-gradient(to left, #9eb6c4, #0a77b6);
+
+      // background-clip: text;
+      // color: transparent;
+    }
+  }
+
+  .body {
+    margin-top: 1rem;
+    width: 90%;
+    background-color: #8a88881a;
+    border-radius: $curve;
+    overflow: hidden;
+  }
+}
+
+.card.danger {
+  .header {
+    .icon {
+      color: #dc2626;
+    }
+    .text {
+      color: #dc2626;
+    }
+  }
+}

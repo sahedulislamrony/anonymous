@@ -1,0 +1,68 @@
+@use "root" as *;
+
+.profile__avatar {
+  margin-top: 1.5rem;
+  @include circle(10rem);
+  background-color: #fff;
+  box-sizing: content-box;
+  position: relative;
+  overflow: visible;
+  cursor: pointer;
+
+  &:hover {
+    &::before {
+      filter: blur(1.5rem);
+      opacity: 0.5;
+    }
+  }
+
+  &::before,
+  &:after {
+    z-index: 22;
+    content: "";
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    width: 100%;
+    height: 100%;
+    transform: translate(-50%, -50%);
+    border-radius: 50%;
+
+    padding: 1.5px;
+    background-image: conic-gradient(from 90deg, #0a77b6, #17fa00, #0a77b6);
+  }
+
+  .wrapper {
+    z-index: 33;
+    @include circle(10rem);
+  }
+  img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    object-position: center;
+    position: relative;
+    //   alt
+    display: grid;
+    place-items: center;
+    color: #0a77b6;
+    text-transform: capitalize;
+    background-color: $bg-main;
+    @include font(600, normal);
+  }
+}
+
+.profile__info {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-direction: column;
+  margin-top: 1rem;
+  margin-bottom: 1rem;
+
+  .text {
+    background-image: linear-gradient(to left, #64748b, #f8fafc);
+    background-clip: text;
+    color: transparent;
+  }
+}

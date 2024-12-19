@@ -1,0 +1,55 @@
+@use "root" as *;
+
+// header class
+.header {
+  margin-top: 1rem;
+  // padding-bottom: 1rem;
+  width: 100%;
+  height: 5rem;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-direction: row;
+  position: relative;
+  &::after {
+    content: "";
+    width: 100%;
+    height: 0.1rem;
+    background-image: linear-gradient(to left, #9eb6c4, #0a77b6);
+    position: absolute;
+    bottom: 0;
+    left: 0;
+  }
+
+  .logo {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: row;
+
+    .logoImg {
+      margin-right: 1rem;
+      @include circle(4rem);
+      background-size: cover;
+      background-repeat: no-repeat;
+      background-position: center;
+      background-color: #e3dcdc;
+      display: grid;
+      place-items: center;
+
+      img {
+        width: 80%;
+        height: 80%;
+        object-position: center;
+        object-fit: cover;
+      }
+    }
+    .logoTxt {
+      @include Arvo(700, normal);
+      font-size: 2.2rem;
+      background-image: linear-gradient(to left, #9eb6c4, #0a77b6);
+      background-clip: text;
+      color: transparent;
+    }
+  }
+}

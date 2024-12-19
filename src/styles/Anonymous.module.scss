@@ -1,0 +1,240 @@
+@use "root" as *;
+
+@property --angle {
+  syntax: "<angle>";
+  inherits: false;
+  initial-value: 0deg;
+}
+
+.anonymous {
+  width: 100%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-direction: column;
+
+  .button {
+    -webkit-tap-highlight-color: transparent;
+    touch-action: manipulation;
+    margin-top: 3rem;
+    cursor: pointer;
+    width: calc(80% - 1.5rem);
+    height: 5rem;
+    border-radius: 3rem;
+    position: relative;
+
+    .btn {
+      z-index: 33;
+      all: unset;
+      outline: none;
+      display: grid;
+      place-items: center;
+      @include font(600, normal);
+      font-size: 1, 5rem;
+      text-transform: capitalize;
+      color: $text;
+      position: absolute;
+      top: 50%;
+      left: 50%;
+      transform: translate(-50%, -50%);
+      width: 100%;
+      height: 100%;
+      border: none;
+      background-color: $bg-main;
+      border-radius: 3rem;
+
+      &:focus,
+      &:active {
+        outline: none;
+      }
+      &:hover {
+        cursor: pointer;
+        color: rgb(153, 59, 216);
+      }
+    }
+
+    .bg {
+      position: absolute;
+      top: 50%;
+      left: 50%;
+      transform: translate(-50%, -50%);
+      width: 100%;
+      height: 100%;
+
+      &::before,
+      &:after {
+        z-index: 22;
+        content: "";
+        position: absolute;
+        top: 50%;
+        left: 50%;
+        width: 100%;
+        height: 100%;
+        transform: translate(-50%, -50%);
+        border-radius: 3rem;
+        padding: 0.2rem;
+        background-image: conic-gradient(
+          from var(--angle),
+          transparent 70%,
+          rgb(153, 59, 216)
+        );
+        animation: rotate 5s linear infinite;
+      }
+
+      &::before {
+        filter: blur(2rem);
+        opacity: 0.5;
+      }
+    }
+  }
+
+  .info {
+    margin-top: 3rem;
+    width: 100%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    .info__text {
+      width: 100%;
+
+      padding-left: 2rem;
+      padding-right: 1rem;
+      @include font(600, normal);
+      font-size: 1.6rem;
+      color: #989898;
+      text-align: left;
+    }
+  }
+}
+
+@keyframes rotate {
+  0% {
+    --angle: 0deg;
+  }
+  100% {
+    --angle: 360deg;
+  }
+}
+
+.loading {
+  width: 100%;
+  height: 100%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-direction: column;
+
+  .loader {
+    width: 15rem;
+
+    img {
+      aspect-ratio: 1/1;
+      object-fit: cover;
+      object-position: center;
+    }
+  }
+}
+
+.invalidUser {
+  width: 100%;
+  height: 100%;
+  display: flex;
+  justify-content: flex-start;
+  align-items: center;
+  flex-direction: column;
+
+  .error {
+    @include font(600, normal);
+    font-size: 2rem;
+    text-align: center;
+
+    background-image: linear-gradient(to left, #9eb6c4, #d30d0d, #d30d0d);
+    background-clip: text;
+    color: transparent;
+  }
+
+  .button {
+    -webkit-tap-highlight-color: transparent;
+    touch-action: manipulation;
+    margin-top: 6rem;
+    cursor: pointer;
+    width: 80%;
+    height: 5rem;
+    border-radius: 3rem;
+    position: relative;
+
+    .btn {
+      z-index: 33;
+      all: unset;
+      outline: none;
+      display: grid;
+      place-items: center;
+      @include font(600, normal);
+      font-size: 1, 5rem;
+      text-transform: capitalize;
+      color: $text;
+      position: absolute;
+      top: 50%;
+      left: 50%;
+      transform: translate(-50%, -50%);
+      width: 100%;
+      height: 100%;
+      border: none;
+      background-color: $bg-main;
+      border-radius: 3rem;
+
+      &:focus,
+      &:active {
+        outline: none;
+      }
+      &:hover {
+        cursor: pointer;
+        color: #0ea5e9;
+      }
+    }
+
+    .bg {
+      position: absolute;
+      top: 50%;
+      left: 50%;
+      transform: translate(-50%, -50%);
+      width: 100%;
+      height: 100%;
+
+      &::before,
+      &:after {
+        z-index: 22;
+        content: "";
+        position: absolute;
+        top: 50%;
+        left: 50%;
+        width: 100%;
+        height: 100%;
+        transform: translate(-50%, -50%);
+        border-radius: 3rem;
+        padding: 0.2rem;
+        background-image: conic-gradient(
+          from var(--angle),
+          #0ea5e9,
+          #581c87,
+          #8426cb,
+          #0ea5e9
+        );
+        animation: rotate 5s linear infinite;
+      }
+
+      &::before {
+        filter: blur(2rem);
+        opacity: 0.5;
+      }
+    }
+
+    &:hover {
+      cursor: pointer;
+      .bg::before {
+        filter: blur(1.5rem);
+        opacity: 0.3;
+      }
+    }
+  }
+}

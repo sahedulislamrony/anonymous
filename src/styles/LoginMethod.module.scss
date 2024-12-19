@@ -1,0 +1,114 @@
+@use "root" as *;
+
+@property --angle {
+  syntax: "<angle>";
+  inherits: false;
+  initial-value: 0deg;
+}
+
+.method {
+  -webkit-tap-highlight-color: transparent;
+  touch-action: manipulation;
+  user-select: none;
+  width: 30rem;
+  height: 5rem;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  cursor: pointer;
+
+  border-radius: 0.9rem;
+  position: relative;
+  transform: scale(1);
+  transform-origin: center;
+  transition: scale 0.15s linear;
+
+  &::before,
+  &:after {
+    z-index: 22;
+    content: "";
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    width: 100%;
+    height: 100%;
+    transform: translate(-50%, -50%);
+    border-radius: $curve;
+    padding: 0.1rem;
+    background-image: conic-gradient(
+      from var(--angle),
+      #e90d0d,
+      #17fa00,
+      #0a77b6,
+      #e90d0d
+    );
+  }
+  &:hover {
+    &::before {
+      filter: blur(1.5rem);
+      opacity: 0.3;
+      animation: rotate 3s linear infinite;
+    }
+    &::after {
+      animation: rotate 3s linear infinite;
+    }
+  }
+
+  .content {
+    z-index: 33;
+    width: 100%;
+    height: 100%;
+    display: flex;
+    flex-direction: row;
+    border-radius: $curve;
+
+    background-color: $bg-main;
+
+    .logo {
+      height: 100%;
+      width: 6rem;
+      display: grid;
+      place-items: center;
+      .img {
+        @include circle(4rem);
+
+        img {
+          width: 100%;
+          height: 100%;
+          object-fit: cover;
+          object-position: center;
+        }
+      }
+    }
+
+    .text {
+      height: 100%;
+      width: 100%;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      @include font(400, normal);
+      font-size: 1.6rem;
+      user-select: none;
+    }
+  }
+
+  &:hover {
+    transform: scale(1.005);
+  }
+
+  &.disabled {
+    cursor: not-allowed;
+    opacity: 0.6;
+    pointer-events: none;
+  }
+}
+
+@keyframes rotate {
+  0% {
+    --angle: 0deg;
+  }
+  100% {
+    --angle: 360deg;
+  }
+}
