@@ -1,53 +1,33 @@
 
-import { useEffect, useState } from "react";
-import { useDispatch } from "react-redux";
-import { useNavigate } from "react-router-dom";
-import { getUserInfo } from "../../api/auth/user";
+import { useEffect } from "react";
+import { useDispatch, useSelector } from "react-redux";
+import { useNavigate, useParams } from "react-router-dom";
 import { showNavbar } from "../../features/navigation/navSlice";
+import { getUser } from "../../features/user/userSlice";
 import style from "../../styles/Anonymous.module.scss";
 import MessageArea from "../MessageArea";
 
-export default function Anonymous({username}) {
+export default function Anonymous() {
     const dispatch = useDispatch();
-    const [data , setData] = useState(null);
-    const [status , setStatus] = useState("idle");  // idle, loading, success, error
+    const {userInfo , status} = useSelector((state) => state.user);
+
+    let {username} = useParams();  
+    username = username.split("/")[0];     
+    username = username.startsWith("@") ? username.slice(1) : username;
+    
+
+    useEffect(() => {
+        dispatch(getUser(username));
+    }, [dispatch, username]);
     
 
     useEffect(() => {
         dispatch(showNavbar(false));
-
-        (async () => {
-
-            try {
-                setStatus("loading");
-                const userInfo = await getUserInfo(username);
-
-                if(!userInfo) {
-                    setStatus("error");
-                    document.title = "User not found | Anonymous";
-                    return;
-                }
-                setData(userInfo);
-                setStatus("success");
-                document.title = `@${username} | Anonymous`;
-            }catch(error) {
-                setStatus("error");
-                console.error(error);
-                document.title = "User not found | Anonymous";
-            }
-           
-        })();
         return () => {
             dispatch(showNavbar(true));
         };
-        
 
-    }, [ dispatch, username]);
-
-    
-
-
-
+    }, [dispatch]);
 
    
 
@@ -59,9 +39,9 @@ export default function Anonymous({username}) {
                 <Loader />
             )}
     
-            {status === "success" && data && <ValidUser data={data} />}
+            {status === "success" && userInfo && <ValidUser />}
     
-            {status === "error" && (
+            {status === "error" && !userInfo && (
                 <InValidUserID />
             )}
         </>
@@ -69,11 +49,11 @@ export default function Anonymous({username}) {
 
 }
 
-function ValidUser({data}) {
+function ValidUser() {
     const navigate = useNavigate();
     return (
         <div className={style.anonymous}>     
-            <MessageArea  user={data} />
+            <MessageArea  />
             <Button 
                 onClick={()=> navigate("/login") }
                 text = "get anonymous message"
@@ -87,6 +67,24 @@ function ValidUser({data}) {
         </div>
     );
 }
+
+
+function InValidUserID() {
+    const navigate = useNavigate();
+    return (
+        <div className={style.invalidUser}>
+            <div className={style.img}>
+                <img src="/userNotFound.svg" alt="404 | User not found!" />
+            </div>
+            <h2 className={style.error}>404 | User not found!</h2>
+            <div className={style.button} onClick={() => navigate("/login")}>
+                <div className={style.bg}></div>
+                <button className={style.btn} type="button"> Get Anonymous Message </button>
+            </div>
+        </div>
+    );
+}
+
 
 
 function Button({onClick , text}) {
@@ -113,18 +111,3 @@ function Loader() {
         </div>
     );
 }
-
-function InValidUserID() {
-    const navigate = useNavigate();
-    return (
-        <div className={style.invalidUser}>
-            <img src="/userNotFound.svg" alt="404 | User not found!" />
-            <h2 className={style.error}>404 | User not found!</h2>
-            <div className={style.button} onClick={() => navigate("/login")}>
-                <div className={style.bg}></div>
-                <button className={style.btn} type="button"> Get Anonymous Message </button>
-            </div>
-        </div>
-    );
-}
-
