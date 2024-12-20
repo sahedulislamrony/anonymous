@@ -31,8 +31,8 @@ export const login = createAsyncThunk("auth/login", async (_, { rejectWithValue 
 
 export const deleteUserAccount = createAsyncThunk("auth/deleteUserAccount", async (_, { rejectWithValue }) => {
     try {
-        const user = await deleteAccount();
-        return user;
+        const response = await deleteAccount();
+        return response;
     } catch (error) {
         return rejectWithValue(error.message);
     }
@@ -73,10 +73,12 @@ const authSlice = createSlice({
                     state.user = loggedInUser; // because we need to show the error popup && sysylogs
                 }
             })
-            .addCase(deleteUserAccount.fulfilled, (state) => {
-                state.user = null;
-                state.isValidUser = false;
-                localStorage.removeItem("user");
+            .addCase(deleteUserAccount.fulfilled, (state,action) => {
+                if(action.payload.status === "ok"){
+                    state.user = null;
+                    state.isValidUser = false;
+                    localStorage.removeItem("user");
+                }
             })
             .addCase(logout.fulfilled, (state) => {
                 state.user = null;

@@ -6,12 +6,8 @@ import Home from "../pages/Home";
 
 export default function MidleWare() {
     let {username:path} = useParams();
-    
     const {user} = useSelector(state => state.auth);
-
-
     path = path.split("/")[0];
-    
     path = path.startsWith("@") ? path.slice(1) : path;
     const username = user?.username;
     
@@ -22,6 +18,6 @@ export default function MidleWare() {
         return <Navigate to="/404" />;
 
 
-    return <Anonyous  username={path} />;
+    return <Anonyous />;
 
 }

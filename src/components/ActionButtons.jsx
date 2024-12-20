@@ -1,17 +1,20 @@
+import { useDispatch } from "react-redux";
 import { useNavigate } from "react-router-dom";
-import deleteMsg from "../api/data/deleteMsg";
+import { remove } from "../features/data/dataSlice";
 import style from "../styles/ActionButtons.module.scss";
-export default function ActionButtons({data}) {
+export default function ActionButtons({actionData}) {
+
+    const {msgID , uid} = actionData;
 
     const navigate = useNavigate();
+    const dispatch = useDispatch();
 
-    const {id , uid} = data;
 
     async function handleDelete() {
         // add a confirmation dialog 
-        const status = await deleteMsg(uid , id);
-        if(status) {
-            navigate("/inbox");
+        const response = await dispatch(remove({msgID, uid}));
+        if(response.payload.status === "ok") {
+            navigate("/inbox" , { replace: true });
         }
         else {
             console.log("Error deleting message");

@@ -5,7 +5,7 @@ import readline from "readline";
 
 const run = (command) => {
     try {
-        process.stdout.write(chalk.yellow(`Running command: ${command}\n`));
+        process.stdout.write(chalk.bold.gray(`> : ${command}\n`));
         execSync(command, { stdio: "inherit" });
     } catch (error) {
         process.stdout.write(chalk.red(`Error: ${error.message}`));
@@ -20,7 +20,7 @@ const ask = (query) => {
     });
 
     return new Promise((resolve) => {
-        const coloredQuery = `${chalk.green(query)} [${chalk.green(
+        const coloredQuery = `${chalk.green(query)} [${chalk.bold.green(
             "y",
         )}/${chalk.red("n")}]: `;
         rl.question(coloredQuery, (answer) => {

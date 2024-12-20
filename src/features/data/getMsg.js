@@ -1,8 +1,8 @@
-import { get, getDatabase, orderByKey, query, ref } from "firebase/database";
+import { get, orderByKey, query, ref } from "firebase/database";
+import { db } from "../../firebase.config";
 
 export default async  function getMsg(UID) {
 
-    const db = getDatabase();
     const msgRef = ref(db, `messages/${UID}`);
     const msgQuery = query(msgRef, orderByKey());
 
@@ -14,10 +14,11 @@ export default async  function getMsg(UID) {
         if (snapshot.exists()) {
             data = snapshot.val();
             Object.keys(data).forEach(key => {
-                data[key].id = key;
+                data[key].msgID = key;
             });
             // we need to store key for update status and delete message
             data = Object.values(data).reverse();
+           
         }
 
     }catch (err) {
@@ -25,8 +26,6 @@ export default async  function getMsg(UID) {
     }
     
    
-   
-
 
     return data;
 

@@ -1,16 +1,16 @@
 import { useDispatch, useSelector } from "react-redux";
-import { setPopup } from "../features/popup/popupSlice";
+import { setPopup } from "../features/view/viewSlice";
 import style from "../styles/Popup.module.scss";
 
 export default function Popup({children,onClose = null}) {
     
     const dispatch = useDispatch();
-    const {showPopup} = useSelector((state) => state.popup);
+    const {showPopup} = useSelector((state) => state.view);
     let popup = showPopup ? style.popup : `${style.popup} ${style.disabled}`;
 
     const closePopup = () => {
-        onClose && onClose();
         dispatch(setPopup(false));
+        onClose && onClose();
     };
     return (
         <div className={popup} onClick={closePopup}>

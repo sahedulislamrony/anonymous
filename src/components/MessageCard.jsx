@@ -2,9 +2,9 @@
 import { useState } from "react";
 import { useSelector } from "react-redux";
 import style from "../styles/MessageCard.module.scss";
-export default function MessageCard({data , link }) {
+export default function MessageCard({messageData , link }) {
 
-    const {msg , time , date } = data || {};
+    const {msg , time , date } = messageData || {};
 
     return (
       
@@ -13,7 +13,7 @@ export default function MessageCard({data , link }) {
                 <h1>send me anonymous message</h1>
             </div>
             <div className={style.main}>
-                { data && 
+                { messageData && 
                 <p className={style.text}>
                     {msg}
                 </p>
@@ -22,7 +22,7 @@ export default function MessageCard({data , link }) {
                 {link && <HomeActionCard  link={link} />}
             </div>
             <div className={style.meta}>
-                {data && <p>{`Anonymous - ${date} at ${time}`}</p>
+                {messageData && <p>{`Anonymous - ${date} at ${time}`}</p>
                 }
             </div>
 

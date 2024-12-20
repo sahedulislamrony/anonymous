@@ -1,7 +1,7 @@
 
 import { useEffect } from "react";
 import { useDispatch } from "react-redux";
-import { showNavbar } from "../features/navigation/navSlice";
+import { setNav } from "../features/view/viewSlice";
 
 import { useLocation } from "react-router";
 import { useNavigate } from "react-router-dom";
@@ -16,13 +16,13 @@ export default function MessageSent() {
     const dispatch = useDispatch();
 
     useEffect(() => {
-        dispatch(showNavbar(false));
+        dispatch(setNav(false));
 
         if(!flow) {
             navigate("/");
         }
         return () => {
-            dispatch(showNavbar(true));
+            dispatch(setNav(true));
         };
     }, [ dispatch , flow , navigate]);
     

@@ -1,16 +1,17 @@
-import { useSelector } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { useNavigate } from "react-router-dom";
-import updateMsg from "../api/data/updateMsg";
+import { update } from "../features/data/dataSlice";
 import style from "../styles/ListItem.module.scss";
 import getRelativeTime from "../utils/getRelativeTime";
 export default function ListItem({data}) {
 
+    const dispatch = useDispatch();
     const navigate = useNavigate();
     const { uid } = useSelector((state) => state.auth.user);
-    const { msg  , timestamp , isUnread , id  } = data;
+    const { msg  , timestamp , isUnread , msgID  } = data;
 
 
-    const title = isUnread ? "New Message" : `${msg.length <= 28 ? msg : msg.slice(0,26) + "..."}`;
+    const title = isUnread ? "New Message" : msg.length <= 28 ? msg : msg.slice(0,26) + "...";
     const liStyle = isUnread ? `${style.li} ${style.unread}` : style.li;
     const relativeTime = getRelativeTime(timestamp);
 
@@ -18,9 +19,9 @@ export default function ListItem({data}) {
 
     async function handleClick() {
         if(isUnread)
-            await updateMsg(uid , id , false);
+            dispatch(update({msgID, uid , isUnread: false}));
 
-        navigate(`/inbox/${id.slice(1)}` , { state: { data  , flow: true} });
+        navigate(`/inbox/${msgID.slice(1)}` , { state: { data  , flow: true} });
     }
 
 

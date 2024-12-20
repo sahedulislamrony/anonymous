@@ -1,8 +1,10 @@
 
-import { getDatabase, push, ref } from "firebase/database";
+import { push, ref } from "firebase/database";
+import { db } from "../../firebase.config";
 
+export default async function sendMsg(userData) {
 
-export default async function sendMsg(uid, msg) {
+    const {uid , msg} = userData;
     let error = null;
     let status = "ok";
     
@@ -12,7 +14,6 @@ export default async function sendMsg(uid, msg) {
         isUnread: true,
     };
     
-    const db = getDatabase();
     const msgRef = ref(db, `messages/${uid}`);
     try {
         await push(msgRef, data);

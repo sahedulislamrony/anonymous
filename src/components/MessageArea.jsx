@@ -1,50 +1,43 @@
 import { useState } from "react";
 import style from "../styles/MessageArea.module.scss";
 
-import { useEffect } from "react";
+import { useDispatch, useSelector } from "react-redux";
 import { useNavigate } from "react-router-dom";
-import sendMsg from "../api/data/sendMsg";
+import { send } from "../features/data/dataSlice";
 
-export default function MessageArea({user }) {
+export default function MessageArea() {
 
+    const dispatch = useDispatch();
     const navigate = useNavigate();
-    
-    const { username , photoURL , isVerified , uid} = user;
+    const {userInfo: user} = useSelector((state) => state.user);
+    const { username , photoURL , isVerified , uid} = user || {};
     const title = `@${username}`;
+
+    //  local states of form
     const [message , setMessage] = useState("");
     const [status , setStatus] = useState("idle"); // idel , loading , error , success
 
-
-    useEffect(() => {
-
-        if(status === "success") {
-            alert("Message sent successfully");
-        }
-    }, [status]);
-
     async function handleSubmit(e) {
         e.preventDefault();
-
         let msg = message.trim();
         if(msg.length === 0) {
             setStatus("error");
             return;
         }
 
-      
-
         try {
             setStatus("loading");
+
             // send message
-            const [response] = await Promise.all([sendMsg(uid , msg),loadingEffect(1500)]);
-            if (response.status === "error") {
+            const [response] = await Promise.all([dispatch(send({uid , msg})),loadingEffect(800)]);
+            console.log(response.payload);
+            if (response.payload.status === "error") {
                 throw new Error(response.error);
-            }  
+            } 
+            
+            
             setStatus("success");
             navigate(`/${username}/msg-sent` , { state : { flow : true }});
-            
-
-
         } catch (err) {
             setStatus("error");
             console.log(err);
@@ -52,11 +45,7 @@ export default function MessageArea({user }) {
 
     }
 
-    async function loadingEffect(time) {
-        // time in ms
-        await new Promise((resolve) => setTimeout(resolve , time || 1000));
-    }
-
+  
     return (
         <form className={style.form}>   
             <div className={style.formGroup}>
@@ -114,7 +103,8 @@ function Badge({name}) {
 function Button({onClick , text , type , isLoading }) {
 
     const loader = ["loader.svg" , "loop.svg"];
-    const index = Math.floor(Math.random() * loader.length);
+    // const index = Math.floor(Math.random() * loader.length);
+    const index = 0;
     const loaderSVG = loader[index];
     return (
         <div className={style.formGroup} onClick={onClick} role="button">
@@ -134,3 +124,7 @@ function Button({onClick , text , type , isLoading }) {
 }
 
 
+async function loadingEffect(time) {
+    // time in ms
+    await new Promise((resolve) => setTimeout(resolve , time || 1000));
+}
