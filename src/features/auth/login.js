@@ -1,11 +1,10 @@
 
-import { getAuth, GoogleAuthProvider, signInWithPopup, updateProfile } from "firebase/auth";
-import "../../firebase.config";
+import { GoogleAuthProvider, signInWithPopup, updateProfile } from "firebase/auth";
+import { auth } from "../../firebase.config";
 
 // signup using google
 export async function withGoogle() {
-    
-    const auth = getAuth();
+
     const provider = new GoogleAuthProvider();
         
     const result = await signInWithPopup(auth, provider);

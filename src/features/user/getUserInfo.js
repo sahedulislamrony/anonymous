@@ -1,9 +1,9 @@
-import { get, getDatabase, ref } from "firebase/database";
-
+import { get, ref } from "firebase/database";
+import { db } from "../../firebase.config";
 
 
 export default async function getUserInfo(username) {
-    const db = getDatabase();
+
     const userRef = ref(db, "search/usernames");
     let userInfo = null;
     try {

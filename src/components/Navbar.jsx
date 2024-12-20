@@ -8,7 +8,7 @@ import { useLocation } from "react-router";
 
 export default function Navbar() {
 
-    const {status} = useSelector((state) => state.navbar);
+    const {showNav} = useSelector((state) => state.view);
     const {pathname} = useLocation();
     let path = pathname.split("/")[1];
     path = path === "" ? "home" : path;
@@ -29,7 +29,7 @@ export default function Navbar() {
     }, []);
 
     return (
-        status && 
+        showNav && 
         <nav className={style.nav}>
             <ul className={style.list}>
                 <Link to="/">

@@ -24,7 +24,7 @@
 
     .icon {
       @include circle(8rem);
-      background-color: $bg-main;
+      background-color: #0d0c0c60;
       display: grid;
       place-items: center;
       border: 0.2rem solid #0a77b6;

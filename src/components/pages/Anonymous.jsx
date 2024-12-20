@@ -2,8 +2,8 @@
 import { useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { useNavigate, useParams } from "react-router-dom";
-import { showNavbar } from "../../features/navigation/navSlice";
 import { getUser } from "../../features/user/userSlice";
+import { setNav } from "../../features/view/viewSlice";
 import style from "../../styles/Anonymous.module.scss";
 import MessageArea from "../MessageArea";
 
@@ -22,9 +22,9 @@ export default function Anonymous() {
     
 
     useEffect(() => {
-        dispatch(showNavbar(false));
+        dispatch(setNav(false));
         return () => {
-            dispatch(showNavbar(true));
+            dispatch(setNav(true));
         };
 
     }, [dispatch]);

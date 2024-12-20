@@ -1,49 +1,30 @@
-import { useEffect, useState } from "react";
+import { useEffect } from "react";
 import { useSelector } from "react-redux";
-import getMsg from "../../api/data/getMsg";
 import style from "../../styles/Inbox.module.scss";
 
+import { useDispatch } from "react-redux";
+import { get } from "../../features/data/dataSlice";
 import ListItem from "../ListItem";
 
 export default function Inbox() {
 
+    const dispatch = useDispatch();
     const { uid:UID } = useSelector((state) => state.auth.user);
-    const [staus , setStatus] = useState("idle");  // idle, loading, success, error
-   
-    const [data , setData] = useState(null);
+    const {inbox} = useSelector((state) => state.data);
+    const {status , data } = inbox || {};
 
     useEffect(() => {
-
-        (async () => {
-            try {
-                setStatus("loading");
-                const data = await getMsg(UID);
-
-                if(!data) {
-                    setStatus("error");
-                    return;
-                }
-                
-                setData(data);
-                setStatus("success");
-            } catch (error) {
-                setStatus("error");
-                console.error(error);
-            }
-            
-        })();
-
-       
-    }, [UID]);
+        dispatch(get(UID));
+    }, [UID,dispatch]);
 
 
     
     return (
         <div className={style.inbox}>
-            {data && staus === "success" && <ul className={style.list}>
+            {data && status === "success" && <ul className={style.list}>
                 
-                { data.map((msg , index) => (
-                    <ListItem key={index} data={msg} />
+                { data.map((msg) => (
+                    <ListItem key={msg.msgID} data={msg} />
                 ))}
            
            
@@ -55,8 +36,8 @@ export default function Inbox() {
                 }}>do not remove me :.: </li>
             </ul>}
 
-            {staus === "loading" && <Loader />}
-            {staus === "error" && <Empty />}
+            {status === "loading" && <Loader />}
+            {status === "error" && <Empty />}
         </div>
     );
 }

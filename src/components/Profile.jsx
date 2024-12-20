@@ -1,7 +1,7 @@
 
 
 import { useDispatch } from "react-redux";
-import { setPopup } from "../features/popup/popupSlice";
+import { setPopup } from "../features/view/viewSlice";
 import style from "../styles/Profile.module.scss";
 import CardSlider from "./CardSlider";
 import Error from "./Error";

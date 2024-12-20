@@ -1,14 +1,14 @@
 import { useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { Navigate, useNavigate } from "react-router-dom";
-import { isNewUser, signNewUser } from "../../api/auth/user";
-import { writeSysLog } from "../../api/sysLog";
 import { deleteUserAccount, login } from "../../features/auth/authSlice";
-import { setPopup } from "../../features/popup/popupSlice";
+import { isNew, signUser } from "../../features/user/userSlice";
+import { setPopup } from "../../features/view/viewSlice";
 import style from "../../styles/Login.module.scss";
 import Error from "../Error";
 import LoginMethod from "../LoginMethod";
 import Popup from "../Popup";
+
 export default function Login() {
     const { user, isLoading, isValidUser, error } = useSelector((state) => state.auth);
     const dispatch = useDispatch();
@@ -20,11 +20,11 @@ export default function Login() {
             
 
             if (user && isValidUser) {
-                const isNew = await isNewUser(user);
-                if(isNew) { 
-                    await signNewUser(user);
+                const isNewuser = await dispatch(isNew(user));
+                if(isNewuser.payload) { 
+                    await dispatch(signUser(user));
+                    // sysLog
                     navigate("/");
-                    writeSysLog("user", user , "New User Signed" , user.isVerified);
                     return;
                 }
                 
@@ -35,7 +35,7 @@ export default function Login() {
             
             if (user && !isValidUser) {   
                 dispatch(setPopup(true));
-                await writeSysLog("Unauthorized", user , "Attempt to sign in" );
+                //  sysLog
                 dispatch(deleteUserAccount());
                 return;    
             }
