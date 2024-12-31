@@ -1,5 +1,9 @@
+<div align="center">
+<img  src="public/logos/logo6.png" width="40" >
+
+</div>
 <h1 align="center" >
- Anonymous
+Anonymous
 </h1>
 
 **A sleek and innovative platform designed for anonymous message exchange with full control over your account and data. This app ensures user privacy and provides a unique user experience with its feature-rich functionality.**
@@ -68,6 +72,24 @@ Sure! Here’s the revised version of the tech stack for your anonymous message-
 - **Git:** A version control system for managing code changes and collaboration.
 - **GitHub:** A platform for hosting and sharing the project’s code repository.
 - **Visual Studio Code:** A powerful code editor for writing and managing the app's code.
+
+## Demo
+
+<div align="center">
+<img src="public/demo/home.png" width="1200">
+<img src="public/demo/anonymous.png" width="1200">
+<img src="public/demo/msgsent.png" width="1200">
+<img src="public/demo/profile.png" width="1200">
+<img src="public/demo/inbox.png" width="1200">
+<img src="public/demo/msg.png" width="1200">
+<img src="public/demo/settings.png" width="1200">
+<img src="public/demo/username.png" width="1200">
+<img src="public/demo/login.png" width="1200">
+<img src="public/demo/msgsent.png" width="1200">
+<img src="public/demo/404.png" width="1200">
+<img src="public/demo/delete.png" width="1200">
+
+</div>
 
 ## Other Documentation
 
