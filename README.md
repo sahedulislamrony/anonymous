@@ -1,7 +1,3 @@
-<div align="center">
-<img  src="public/logos/logo6.png" width="40" >
-
-</div>
 <h1 align="center" >
 Anonymous
 </h1>
