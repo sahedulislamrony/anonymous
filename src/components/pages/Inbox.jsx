@@ -1,23 +1,15 @@
-import { useEffect } from "react";
 import { useSelector } from "react-redux";
 import style from "../../styles/Inbox.module.scss";
 
-import { useDispatch } from "react-redux";
-import { get } from "../../features/data/dataSlice";
 import ListItem from "../ListItem";
 
 export default function Inbox() {
 
-    const dispatch = useDispatch();
-    const { uid:UID } = useSelector((state) => state.auth.user);
+    // const dispatch = useDispatch();
     const {inbox} = useSelector((state) => state.data);
     const {status , data } = inbox || {};
 
-    useEffect(() => {
-        dispatch(get(UID));
-    }, [UID,dispatch]);
-
-
+    // fetch inbox messages here and dispatch to store 
     
     return (
         <div className={style.inbox}>
@@ -29,11 +21,7 @@ export default function Inbox() {
            
            
                 {/* part of design */}
-                <li style={{
-                    padding: 0,
-                    margin: 0,
-                    visibility: "hidden",
-                }}>do not remove me :.: </li>
+                <li className={style.pixedBottomSpace}>do not remove me :.: </li>
             </ul>}
 
             {status === "loading" && <Loader />}

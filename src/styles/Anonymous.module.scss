@@ -75,34 +75,16 @@
         padding: 0.2rem;
         background-image: conic-gradient(
           from var(--angle),
-          transparent 70%,
+          transparent 50%,
           rgb(153, 59, 216)
         );
         animation: rotate 5s linear infinite;
       }
 
       &::before {
-        filter: blur(2rem);
+        filter: blur(3rem);
         opacity: 0.5;
       }
-    }
-  }
-
-  .info {
-    margin-top: 3rem;
-    width: 100%;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    .info__text {
-      width: 100%;
-
-      padding-left: 2rem;
-      padding-right: 1rem;
-      @include font(600, normal);
-      font-size: 1.6rem;
-      color: #989898;
-      text-align: left;
     }
   }
 }
@@ -118,7 +100,7 @@
 
 .loading {
   width: 100%;
-  height: 100%;
+  height: 80%;
   display: flex;
   justify-content: center;
   align-items: center;
@@ -126,6 +108,7 @@
 
   .loader {
     width: 15rem;
+    user-select: none;
 
     img {
       aspect-ratio: 1/1;
@@ -137,27 +120,27 @@
 
 .invalidUser {
   width: 100%;
-  height: 100%;
+  height: 80%;
   display: flex;
-  justify-content: flex-start;
+  justify-content: center;
   align-items: center;
   flex-direction: column;
 
-  .img {
-    width: 30rem;
-    height: 30rem;
+  // .img {
+  //   width: 30rem;
+  //   height: 30rem;
 
-    img {
-      width: 100%;
-      height: 100%;
-      object-fit: cover;
-      object-position: center;
-    }
-  }
+  //   img {
+  //     width: 100%;
+  //     height: 100%;
+  //     object-fit: cover;
+  //     object-position: center;
+  //   }
+  // }
 
   .error {
     @include font(600, normal);
-    font-size: 2rem;
+    font-size: 2.5rem;
     text-align: center;
 
     background-image: linear-gradient(to left, #9eb6c4, #d30d0d, #d30d0d);

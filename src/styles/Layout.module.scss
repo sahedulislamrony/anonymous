@@ -11,14 +11,18 @@
   background-color: $bg-main;
   color: $text;
 
+  @include bgEffect;
+
   // main class
   // mobile first design
   .main {
     width: $app-width;
     height: 100%;
-    background-color: $bg-card;
     display: flex;
     flex-direction: column;
+    overflow: hidden; // untested
+    position: relative;
+    background-color: transparent;
   }
 
   .content {

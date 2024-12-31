@@ -18,6 +18,13 @@
     align-items: center;
 
     padding-top: 2rem;
+
+    li.pixedBottomSpace {
+      margin: 0;
+      padding: 2rem 0;
+      width: 100%;
+      visibility: hidden;
+    }
   }
 }
 

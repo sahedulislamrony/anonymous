@@ -7,9 +7,9 @@ import Login from "../pages/Login";
 import Message from "../pages/Message";
 import Page404 from "../pages/Page404";
 import Settings from "../pages/Settings";
+import ChangeUsernameValidity from "./ChangeUsernameValidity";
 import MidleWare from "./MidleWare";
 import PrivateRoute from "./PrivateRoute";
-import PublicRoute from "./PublicRoute";
 
 
 
@@ -28,28 +28,20 @@ export default function App() {
                     <Route path="*" element={<NotFound />} />
                     <Route path="/404" element={<Page404 />} />
                     
-                  
-                    
                     <Route path="/:username" element={<MidleWare />} />
                     <Route path="/:username/msg-sent" element={<MessageSent />} />
-                    
+                    <Route path="/" element={<Home />} />
+
+
                     {/* Private routes */}
-                    <Route path="/" element={<PrivateRoute />} >
-                        <Route path="/" element={<Home />} />
+                    <Route path="/" element={<PrivateRoute />} >  
                         <Route path="inbox" element={<Inbox />} />
                         <Route path="inbox/:id" element={<Message />} />
                         <Route path="settings" element={<Settings />} />
+                        <Route path="settings/change-username" element={<ChangeUsernameValidity />} />
                     </Route>
 
-                    {/* User login || Public routes  */} 
                     <Route path="/login" element={<Login />} /> 
-                    <Route path="/" element={<PublicRoute />} >
-                        
-                    </Route>
-                    
-                           
-                   
-                   
                 </Routes>
             </Layout>
         </Router>

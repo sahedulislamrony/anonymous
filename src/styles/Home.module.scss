@@ -1,0 +1,155 @@
+@use "root" as *;
+
+@property --angle {
+  syntax: "<angle>";
+  inherits: false;
+  initial-value: 0deg;
+}
+
+.home {
+  width: 100%;
+  height: 80%;
+  display: flex;
+  justify-content: flex-end;
+  align-items: center;
+  flex-direction: column;
+  padding-bottom: 10rem;
+
+  .title {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: row;
+
+    @include Arvo(700, normal);
+    font-size: 5rem;
+    background-image: linear-gradient(to left, #0a77b6, #8426cb);
+    background-clip: text;
+    color: transparent;
+
+    span {
+      font-size: 5rem;
+      padding-left: 1rem;
+    }
+  }
+
+  .text {
+    margin-top: 1rem;
+    @include font(600, normal);
+    font-size: 2rem;
+    padding-top: 1rem;
+    width: 100%;
+    text-align: center;
+  }
+
+  .text2 {
+    @include font(700, normal);
+    font-size: 2rem;
+    padding-top: 0.8rem;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: row;
+    background-image: linear-gradient(to left, #0a77b6, #8426cb);
+    background-clip: text;
+    color: transparent;
+
+    &:hover {
+      cursor: pointer;
+    }
+  }
+
+  .button {
+    -webkit-tap-highlight-color: transparent;
+    touch-action: manipulation;
+    margin-top: 6rem;
+    cursor: pointer;
+    width: 80%;
+    height: 5rem;
+    border-radius: 3rem;
+    position: relative;
+
+    .btn {
+      z-index: 33;
+      all: unset;
+      outline: none;
+      display: grid;
+      place-items: center;
+      @include font(600, normal);
+      font-size: 1, 5rem;
+      text-transform: capitalize;
+      color: $text;
+      position: absolute;
+      top: 50%;
+      left: 50%;
+      transform: translate(-50%, -50%);
+      width: 100%;
+      height: 100%;
+      border: none;
+      background-color: $bg-main;
+      border-radius: 3rem;
+
+      &:focus,
+      &:active {
+        outline: none;
+      }
+      &:hover {
+        cursor: pointer;
+        color: #0ea5e9;
+      }
+    }
+
+    .bg {
+      position: absolute;
+      top: 50%;
+      left: 50%;
+      transform: translate(-50%, -50%);
+      width: 100%;
+      height: 100%;
+
+      &::before,
+      &:after {
+        z-index: 22;
+        content: "";
+        position: absolute;
+        top: 50%;
+        left: 50%;
+        width: 100%;
+        height: 100%;
+        transform: translate(-50%, -50%);
+        border-radius: 3rem;
+        padding: 0.2rem;
+        background-image: conic-gradient(
+          from var(--angle),
+          #0ea5e9,
+          #581c87,
+          #8426cb,
+          #0ea5e9
+        );
+        animation: rotate 5s linear infinite;
+      }
+
+      &::before {
+        filter: blur(2rem);
+        opacity: 0.5;
+      }
+    }
+
+    &:hover {
+      cursor: pointer;
+      .bg::before {
+        filter: blur(1.5rem);
+        opacity: 0.3;
+      }
+    }
+  }
+}
+
+@keyframes rotate {
+  0% {
+    --angle: 0deg;
+  }
+  100% {
+    --angle: 360deg;
+  }
+}

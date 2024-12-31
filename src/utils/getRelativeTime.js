@@ -1,4 +1,4 @@
-export default function getRelativeTime(timestamp, fullTime = false) {
+export default function getRelativeTime(timestamp, fullTime = false ) {
     const now = Date.now();
     const diffInMs = now - timestamp;
   
@@ -54,3 +54,15 @@ function formatTime(date) {
     }); //  "3:24 PM"
 }
   
+export function getDateAfter(days) {
+    const now = Date.now();
+    const msInDay = 24 * 60 * 60 * 1000;
+    const futureDate = new Date(now + days * msInDay).toLocaleDateString("en-US", {
+        year: "numeric",
+        month: "short",
+        day: "numeric",
+    }); // "Jan 25, 2025"
+
+    return futureDate;
+}
+

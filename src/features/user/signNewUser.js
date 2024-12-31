@@ -1,24 +1,28 @@
 import { ref, set } from "firebase/database";
 import { db } from "../../firebase.config";
 
-// set new user info in search database
 
-export async function signNewUser(user){
+// Set new user info in search database
+export async function signNewUser(user) {
+   
 
-    const { uid , username   , isVerified , photoURL} = user;
-    const userRef = ref(db, `search/usernames/${uid}`);
-    const  data = {
-        username,
-        uid,
-        isVerified,
-        photoURL,
-        
+
+    // Prepare user data
+    const userData = {
+        // user data
+       
     };
+    const searchData = {
+        // search data
+    };
+
     try {
-        await set(userRef, data);
+        // Save user data to main user database and search database
+        await Promise.all([
+            set(ref(db, ""), { info: userData }),
+            set(ref(db, ""), searchData),
+        ]);
     } catch (err) {
-        console.log(err);
+        console.error("Error updating user data:", err);
     }
-};
-
-
+}

@@ -10,7 +10,7 @@ export default async function updateMsg(msgID, UID , isUnread){
  
 
     try {
-        await update(ref(db, `messages/${UID}/${msgID}`), {
+        await update(ref(db, ""), {
             isUnread,
         });
 

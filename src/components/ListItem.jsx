@@ -29,20 +29,24 @@ export default function ListItem({data}) {
 
     return (
         <li className={liStyle} onClick={handleClick}>
-            <div className={style.content}>
-                <div className={style.icon}>
-                    <span className="material-symbols-outlined">
+            <div className={style.wrapper}>
+                <div className={style.bg}></div>
+                <div className={style.content}>
+                    <div className={style.icon}>
+                        <span className="material-symbols-outlined">
                   mail
-                    </span>
-                </div>
-
-                <div className={style.msg}>
-                    <div className={style.text}>
-                        <p>{title}</p>
+                        </span>
                     </div>
-                    <p className={style.meta}>{relativeTime}</p>
+
+                    <div className={style.msg}>
+                        <div className={style.text}>
+                            <p>{title}</p>
+                        </div>
+                        <p className={style.meta}>{relativeTime}</p>
+                    </div>
                 </div>
             </div>
+           
         </li>
     );
 }

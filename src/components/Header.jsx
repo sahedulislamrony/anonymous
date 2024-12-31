@@ -9,25 +9,43 @@ export default function Header() {
     const username = user?.username;
     const [text, setText] = useState("Anonymous");
     const {pathname } = useLocation();
+    const {forceHeader} = useSelector(state => state.view);
+    const { status , text:headerTxt} = forceHeader || {};
     
     
 
     
     useEffect(() => {
+
         let path = pathname.split("/"); 
         const header = path[1];
-        setText(header.charAt(0).toUpperCase() + header.slice(1));
 
-        if(header == ""  || header == username && user){
-            setText(`@${username}`);
-        }else if(!user && header !== "login" && header !== "404"){
-            setText("Anonymous");
-        } else if(path.length === 3){
-            setText("Message");
-        }
+        (() => {
+            
+            if(status) return setText(headerTxt);
+        
+            setText(header.charAt(0).toUpperCase() + header.slice(1));
+            if((header == ""  || header == username) && user){
+                setText(`@${username}`);
+            }
+            else if(header == "" && !user) {
+                setText("Anonymous");
+            }
+        
+            else if(!user && header !== "login" && header !== "404"){
+                setText("Anonymous");
+            } else if(path.length === 3 && path[1] === "inbox"){
+                setText("Message");
+            }
+            else if(path[2] === "change-username"){
+                setText("Change username");
+            }
+        })();
+
+
         
 
-    }, [pathname, user, username]);
+    }, [pathname, user, username , status, headerTxt]);
     return (
         <header className={style.header}>
             <div className={style.logo}>

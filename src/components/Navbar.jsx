@@ -1,25 +1,28 @@
-import { useSelector } from "react-redux";
 import { Link } from "react-router-dom";
 import style from "../styles/Navbar.module.scss";
 import Icon from "./Icon";
 
-import { useEffect } from "react";
+import { useEffect, useRef, useState } from "react";
 import { useLocation } from "react-router";
 
 export default function Navbar() {
 
-    const {showNav} = useSelector((state) => state.view);
     const {pathname} = useLocation();
+    const pathLength = pathname.split("/").length;
     let path = pathname.split("/")[1];
     path = path === "" ? "home" : path;
     const isActive = (link) => link === path;
 
+    // blur effect
+    const [isBlur, setIsBlur] = useState(false);
+
+    const navRef = useRef(null);
 
     useEffect(() => {  
-        const nav = document.querySelector("nav");
-        const links = nav && nav.querySelectorAll("a");
+        const nav = navRef.current;
+        const links = nav?.querySelectorAll("a");
         
-        links && links.forEach((link) => {
+        links?.forEach((link) => {
             // Prevent right click | long press context menu
             link.addEventListener("contextmenu", (e) => {
                 e.preventDefault();
@@ -28,9 +31,21 @@ export default function Navbar() {
 
     }, []);
 
+    // blur effect 
+
+    useEffect(() => {
+        if(path === "inbox"){
+            setIsBlur(true);
+            return () => {
+                setIsBlur(false);
+            };
+        }
+
+    }, [path, pathLength]);
+
+
     return (
-        showNav && 
-        <nav className={style.nav}>
+        <nav className={isBlur ? `${style.blur} ${style.nav}` : style.nav} ref={navRef}>
             <ul className={style.list}>
                 <Link to="/">
                     <Icon name="home" text="home" isActive={isActive("home")} />

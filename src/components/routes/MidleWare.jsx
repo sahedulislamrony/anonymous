@@ -1,6 +1,6 @@
 
 import { useSelector } from "react-redux";
-import { Navigate, useParams } from "react-router-dom";
+import { useParams } from "react-router-dom";
 import Anonyous from "../pages/Anonymous";
 import Home from "../pages/Home";
 
@@ -14,10 +14,6 @@ export default function MidleWare() {
 
     if(user && username === path )
         return <Home/>;
-    else if(user && username !== path )
-        return <Navigate to="/404" />;
-
-
     return <Anonyous />;
 
 }

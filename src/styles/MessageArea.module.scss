@@ -30,12 +30,12 @@
       justify-content: flex-start;
       align-items: center;
       width: 100%;
-      height: 5rem;
+      height: 6rem;
       flex-direction: row;
 
       // background-color: #17fa00;
       .profilePic {
-        @include circle(4rem);
+        @include circle(5rem);
         overflow: visible;
         position: relative;
         box-sizing: content-box;
@@ -44,7 +44,7 @@
 
         .img {
           z-index: 33;
-          @include circle(4rem);
+          @include circle(5rem);
           object-fit: cover;
           object-position: center;
         }
@@ -62,9 +62,9 @@
           padding: 0.1rem;
           background-image: conic-gradient(
             from 0deg,
-            #e90d0d,
             #0a77b6,
-            #e90d0d
+            #8426cb,
+            #0a77b6
           );
         }
 
@@ -78,7 +78,7 @@
       .text {
         width: 100%;
         height: 100%;
-        padding-left: 1rem;
+        padding-left: 0.6rem;
         padding-top: 0.4rem;
 
         .username {
@@ -120,6 +120,7 @@
         }
 
         .meta {
+          padding-left: 1rem;
           @include font(600, italic);
           font-size: 1.1rem;
           background-image: linear-gradient(to left, #1a1919, #c0c0c0);
@@ -192,6 +193,8 @@
         @include font(600, normal);
         font-size: 1.6rem;
 
+        @include bgEffect2();
+
         &:focus {
           outline: none;
         }
@@ -200,6 +203,11 @@
           font-size: 1.6rem;
           color: #ccc9c9;
         }
+
+        &::-webkit-scrollbar {
+          display: none;
+        }
+        scrollbar-width: none;
       }
     }
     .button {

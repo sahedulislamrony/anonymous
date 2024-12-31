@@ -1,6 +1,11 @@
 @use "root" as *;
 
 $box-height: 6rem;
+@property --angle {
+  syntax: "<angle>";
+  inherits: false;
+  initial-value: 0deg;
+}
 
 .li {
   -webkit-tap-highlight-color: transparent;
@@ -10,16 +15,81 @@ $box-height: 6rem;
   margin-bottom: 1.5rem;
   cursor: pointer;
 
+  .wrapper {
+    width: 100%;
+    min-height: $box-height;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    position: relative;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    .bg {
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+
+      &::before,
+      &:after {
+        z-index: 22;
+        content: "";
+        position: absolute;
+        top: 50%;
+        left: 50%;
+        width: 100%;
+        height: 100%;
+        transform: translate(-50%, -50%);
+
+        border-radius: 0.4rem;
+        padding: 0.1rem;
+        background-image: conic-gradient(
+          from var(--angle),
+          #525252,
+          #0a77b6,
+          #525252,
+          #525252
+        );
+        animation: none;
+      }
+    }
+  }
+
+  &:hover {
+    .wrapper {
+      .bg {
+        &::before,
+        &::after {
+          animation: rotate 3s linear infinite;
+        }
+      }
+      .bg::before {
+        filter: blur(1rem);
+        opacity: 0.4;
+      }
+    }
+  }
   .content {
+    z-index: 33;
+    // position: absolute;
+    // top: 50%;
+    // left: 50%;
+    // transform: translate(-50%, -50%);
     width: 100%;
     display: flex;
     flex-direction: row;
+    justify-content: center;
+    align-items: center;
     border-radius: 0.4rem;
     background-color: $bg-main;
+    min-height: $box-height;
 
     .icon {
       width: 5rem;
-      height: $box-height;
+      // height: $box-height;
+      height: 100%;
       display: grid;
       place-items: center;
       color: #dbd4d4;
@@ -30,7 +100,10 @@ $box-height: 6rem;
 
     .msg {
       width: calc(100% - 5rem);
-      height: $box-height;
+      // height: $box-height;
+      height: 100%;
+      padding-top: 0.5rem;
+      padding-bottom: 0.5rem;
 
       display: flex;
       flex-direction: column;
@@ -47,10 +120,8 @@ $box-height: 6rem;
         @include font(400, normal);
         font-size: 1.6rem;
         color: #dbd4d4;
+        line-height: normal;
       }
-    }
-    &:hover {
-      box-shadow: 0 0 1rem -4px rgb(116, 115, 115);
     }
   }
 
@@ -60,11 +131,27 @@ $box-height: 6rem;
   }
 
   &.unread {
-    .content {
-      &:hover {
-        box-shadow: 0 0 1rem -4px #ec4899;
+    .wrapper {
+      .bg {
+        &::before,
+        &::after {
+          background-image: conic-gradient(
+            from var(--angle),
+            #e90dde,
+            #0a77b6,
+            #e90dde,
+            #e90dde
+          );
+          animation: rotate 3s linear infinite;
+        }
+        &::before {
+          filter: blur(0.5rem);
+          opacity: 0.4;
+        }
       }
+    }
 
+    .content {
       .icon,
       .msg,
       .meta,
@@ -73,5 +160,14 @@ $box-height: 6rem;
         color: #ec4899;
       }
     }
+  }
+}
+
+@keyframes rotate {
+  0% {
+    --angle: 0deg;
+  }
+  100% {
+    --angle: 360deg;
   }
 }

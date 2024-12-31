@@ -1,48 +1,117 @@
-@import url("https://fonts.googleapis.com/css?family=Arvo:400,700");
+@use "root" as *;
 
-.page_404 {
-  padding: 40px 0;
-  background: #fff;
-  font-family: "Arvo", serif;
-}
-.text {
-  text-align: center;
-}
-.page_404 img {
+.notFound {
   width: 100%;
-}
+  height: 80%;
+  display: flex;
+  justify-content: flex-start;
+  align-items: center;
+  flex-direction: column;
 
-.four_zero_four_bg {
-  background-image: url(https://cdn.dribbble.com/users/285475/screenshots/2083086/dribbble_1.gif);
-  height: 400px;
-  background-position: center;
-  background-repeat: no-repeat;
-  //   background-size: cover;
-}
+  .img {
+    width: 30rem;
+    height: 30rem;
 
-.four_zero_four_bg h1 {
-  font-size: 80px;
-}
-
-.four_zero_four_bg h3 {
-  font-size: 80px;
-}
-
-.link_404 {
-  color: #fff !important;
-  padding: 10px 20px;
-  background: #39ac31;
-  margin: 20px 0;
-  display: inline-block;
-  &:hover {
-    text-decoration: underline;
+    img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      object-position: center;
+    }
   }
-}
-.contant_box_404 {
-  margin-top: -50px;
-  font-size: 2rem;
-}
 
-.content {
-  text-align: center;
+  .error {
+    @include font(600, normal);
+    font-size: 2rem;
+    text-align: center;
+
+    background-image: linear-gradient(to left, #9eb6c4, #d30d0d, #d30d0d);
+    background-clip: text;
+    color: transparent;
+  }
+
+  .button {
+    -webkit-tap-highlight-color: transparent;
+    touch-action: manipulation;
+    margin-top: 6rem;
+    cursor: pointer;
+    width: 80%;
+    height: 5rem;
+    border-radius: 3rem;
+    position: relative;
+
+    .btn {
+      z-index: 33;
+      all: unset;
+      outline: none;
+      display: grid;
+      place-items: center;
+      @include font(600, normal);
+      font-size: 1, 5rem;
+      text-transform: capitalize;
+      color: $text;
+      position: absolute;
+      top: 50%;
+      left: 50%;
+      transform: translate(-50%, -50%);
+      width: 100%;
+      height: 100%;
+      border: none;
+      background-color: $bg-main;
+      border-radius: 3rem;
+
+      &:focus,
+      &:active {
+        outline: none;
+      }
+      &:hover {
+        cursor: pointer;
+        color: #0ea5e9;
+      }
+    }
+
+    .bg {
+      position: absolute;
+      top: 50%;
+      left: 50%;
+      transform: translate(-50%, -50%);
+      width: 100%;
+      height: 100%;
+
+      &::before,
+      &:after {
+        z-index: 22;
+        content: "";
+        position: absolute;
+        top: 50%;
+        left: 50%;
+        width: 100%;
+        height: 100%;
+        transform: translate(-50%, -50%);
+        border-radius: 3rem;
+        padding: 0.2rem;
+        background-image: conic-gradient(
+          from var(--angle),
+          #0ea5e9,
+          #581c87,
+          #8426cb,
+          #0ea5e9
+        );
+        animation: rotate 5s linear infinite;
+      }
+
+      &::before {
+        filter: blur(2rem);
+        opacity: 0.5;
+      }
+    }
+
+    &:hover {
+      cursor: pointer;
+      .bg::before {
+        filter: blur(1.5rem);
+        opacity: 0.3;
+      }
+    }
+  }
 }
