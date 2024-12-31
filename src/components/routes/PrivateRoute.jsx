@@ -4,10 +4,10 @@ import { Navigate, Outlet } from "react-router-dom";
 
 export default function PrivateRoute() {
 
-    const {user , isValidUser } = useSelector(state => state.auth);
+    const {user  } = useSelector(state => state.auth);
   
 
     return (
-        user && isValidUser ? <Outlet /> : <Navigate to="/login"/>
+        user  ? <Outlet /> : <Navigate to="/"/>
     );
 }

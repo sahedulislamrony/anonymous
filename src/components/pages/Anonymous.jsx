@@ -3,33 +3,31 @@ import { useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { useNavigate, useParams } from "react-router-dom";
 import { getUser } from "../../features/user/userSlice";
-import { setNav } from "../../features/view/viewSlice";
+import { setHeader } from "../../features/view/viewSlice";
 import style from "../../styles/Anonymous.module.scss";
 import MessageArea from "../MessageArea";
 
 export default function Anonymous() {
     const dispatch = useDispatch();
     const {userInfo , status} = useSelector((state) => state.user);
-
+    const { isLinkActive } = userInfo || false;
     let {username} = useParams();  
     username = username.split("/")[0];     
     username = username.startsWith("@") ? username.slice(1) : username;
-    
+    const {user} = useSelector(state => state.auth);
 
     useEffect(() => {
         dispatch(getUser(username));
-    }, [dispatch, username]);
-    
-
-    useEffect(() => {
-        dispatch(setNav(false));
+        if(user) {
+            dispatch(setHeader({status: true, text: `@${username}`}));
+        }
         return () => {
-            dispatch(setNav(true));
+            dispatch(setHeader({status: false}));
         };
 
-    }, [dispatch]);
+    }, [dispatch, username, user]);
+    
 
-   
 
 
 
@@ -39,9 +37,9 @@ export default function Anonymous() {
                 <Loader />
             )}
     
-            {status === "success" && userInfo && <ValidUser />}
+            {status === "success" && userInfo && isLinkActive && <ValidUser />}
     
-            {status === "error" && !userInfo && (
+            {(status === "error"  || !userInfo  || !isLinkActive) && (
                 <InValidUserID />
             )}
         </>
@@ -51,20 +49,17 @@ export default function Anonymous() {
 
 function ValidUser() {
     const navigate = useNavigate();
+    const {user} = useSelector(state => state.auth);
+
+
     return (
         <div className={style.anonymous}>     
             <MessageArea  />
-            <Button 
+            {!user && <Button 
                 onClick={()=> navigate("/login") }
                 text = "get anonymous message"
-            />
-
-            <div className={style.info}>
-                <p className={style.info__text}>
-                Your privacy, your rules. Control your anonymous messages with Anonymous.me
-                </p>
-            </div>
-        </div>
+            />}
+        </div>  
     );
 }
 
@@ -72,16 +67,15 @@ function ValidUser() {
 function InValidUserID() {
     const navigate = useNavigate();
     return (
-        <div className={style.invalidUser}>
-            <div className={style.img}>
-                <img src="/userNotFound.svg" alt="404 | User not found!" />
+        <>
+            <div className={style.invalidUser}>
+                <h2 className={style.error}>404 | User not found!</h2>
+                <div className={style.button} onClick={() => navigate("/login")}>
+                    <div className={style.bg}></div>
+                    <button className={style.btn} type="button"> Get Anonymous Message </button>
+                </div>
             </div>
-            <h2 className={style.error}>404 | User not found!</h2>
-            <div className={style.button} onClick={() => navigate("/login")}>
-                <div className={style.bg}></div>
-                <button className={style.btn} type="button"> Get Anonymous Message </button>
-            </div>
-        </div>
+        </>
     );
 }
 
@@ -103,11 +97,15 @@ function Loader() {
     const index = Math.floor(Math.random() * loader.length);
     const loaderSVG = loader[index];
     return (
-        <div className={style.loading}>
-            <div className={style.loader}>
-                <img src={`/${loaderSVG}`} alt="Loading..." className={style.img} />
+        <>
+            <div className={style.loading}>
+                <div className={style.loader}>
+                    <img src={`/${loaderSVG}`} alt="Loading..." className={style.img} />
+                </div>
+               
             </div>
-        
-        </div>
+        </>
     );
 }
+
+

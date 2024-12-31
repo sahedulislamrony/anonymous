@@ -12,7 +12,7 @@ export default function MessageCard({messageData , link }) {
             <div className={style.title}>
                 <h1>send me anonymous message</h1>
             </div>
-            <div className={style.main}>
+            <div className={link ? style.main : `${style.main} ${style.noLink}`}>
                 { messageData && 
                 <p className={style.text}>
                     {msg}
@@ -21,7 +21,7 @@ export default function MessageCard({messageData , link }) {
 
                 {link && <HomeActionCard  link={link} />}
             </div>
-            <div className={style.meta}>
+            <div className={link ? style.meta : `${style.meta} ${style.noLink}`}>
                 {messageData && <p>{`Anonymous - ${date} at ${time}`}</p>
                 }
             </div>
@@ -38,16 +38,18 @@ function HomeActionCard({link}){
     const {user} = useSelector((state) => state.auth);
     const {username} = user;
     const {host} = window.location;
+    // let pathTxt;
 
     if(link === "root"){
         link = `${host}/${username}`;
+        // pathTxt = `@/${username}`;
     }
 
     const [copied, setCopied] = useState(false);
     
     const copyToClipboard = async () => {
         try {
-            await navigator.clipboard.writeText(link);
+            await navigator.clipboard.writeText(`https://${link}`);
             setCopied(true);
             setTimeout(() => {
                 setCopied(false);
@@ -68,7 +70,7 @@ function HomeActionCard({link}){
                 </span>
                 <span>
                     {
-                        link.length > 30 ? link.substring(0,30) + "..." : link
+                        link.length > 28 ? `${link.slice(0,25)}...` : link
                     }
                 </span>
             </div>

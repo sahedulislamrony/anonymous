@@ -1,7 +1,10 @@
 import { createSlice } from "@reduxjs/toolkit";
 
 const initialState = {
-    showNav: true,
+    forceHeader: {
+        status: false,
+        text: "",
+    },
     showPopup: false,
 };
 
@@ -9,8 +12,8 @@ const viewSlice = createSlice({
     name: "view",
     initialState,
     reducers: {
-        setNav: (state, action) => {
-            state.showNav = action.payload;
+        setHeader: (state, action) => {
+            state.forceHeader = action.payload;
         },
         setPopup: (state, action) => {
             state.showPopup = action.payload;
@@ -19,5 +22,5 @@ const viewSlice = createSlice({
 });
 
 
-export const { setNav, setPopup } = viewSlice.actions;
+export const { setHeader, setPopup } = viewSlice.actions;
 export default viewSlice.reducer;

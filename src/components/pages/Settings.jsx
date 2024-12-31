@@ -1,70 +1,125 @@
 import style from "../../styles/Settings.module.scss";
-import SettingCard from "../SettingCard";
-import SettingItem from "../SettingItem";
 import ProfileInfo from "./../ProfileInfo";
 
+import { useReducer } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { useNavigate } from "react-router-dom";
-import { deleteUserAccount, logout } from "../../features/auth/authSlice";
+import { deleteUserAccount, logout, pauseLink } from "../../features/auth/authSlice";
 import { clearDB } from "../../features/data/dataSlice";
+import { setPopup } from "../../features/view/viewSlice";
+import SettingItem from "../SettingItem";
+import Confirmation from "./../Confirmation";
+import Popup from "./../Popup";
 
 export default function Settings() {
     const {user} = useSelector((state) => state.auth);
     const dispatch = useDispatch();
     const navigate = useNavigate();
+
+    const {isLinkActive} = user.settings || false;
+    // const isLinkActive = false;
+    
+
+
+    //local  state for popup dialog
+    const initialState = {
+        title: "",
+        msg: "",
+        action: () => {},
+        danger: false,
+        btnText: "",
+    
+    };
+    function reducer(state, action) {
+        switch(action.type) {
+                case "logout":
+                    state = {
+                        title: "Logout",
+                        msg: "Are you sure you want to logout?",
+                        action: handleLogout,
+                        danger: false,
+                        btnText: "Logout",
+                    };
+
+                    return state;
+                case "delete":
+                    state = {
+                        title: "Delete Account",
+                        msg: "This action is permanent and cannot be undone. All your data will be permanently deleted.",
+                        action: handleDeleteAccount,
+                        danger: true,
+                        btnText: "Delete",
+                    };
+                    return state;
+                case "link":
+                    state = {
+                        title: isLinkActive ? "Pause your link" : "Activate your link",
+                        msg: isLinkActive ? "Are you sure you want to pause your link?" : "Are you sure you want to activate your link?",
+                        action: () => pauseUserLink(),
+                        danger: isLinkActive,
+                        btnText: isLinkActive ? "Pause" : "Activate",
+                    };
+                    return state;
+                default:
+                    return state;
+        }
+    }
+    
+    const [popupBox , dispatcher]  = useReducer(reducer , initialState);
+
+
+
     async function handleLogout() {
-        // add a confirmation dialog popup
-        await dispatch(logout());
-        navigate("/login");
+        return dispatch(logout());
+        
+    }
+    async function pauseUserLink() {
+        const userData = {
+            uid: user.uid,
+            isLinkActive: !isLinkActive,
+        };   
+        await dispatch(pauseLink(userData));
     }
 
     async function handleDeleteAccount() {
-        // add a confirmation dialog popup
-        try{
-            // const res = await Promise.all([dispatch(deleteUserAccount()),dispatch(clearDB(user))]);
-            const res = await dispatch(deleteUserAccount());
-            let state = res.payload;
+        await dispatch(clearDB(user));
+        const res = await dispatch(deleteUserAccount());
+        let state = res.payload;
+        if(state.status !== "ok") {
+            throw new Error("Failed to delete account");
 
-            if(state.status === "ok"){
-                // delete user from search database , and msessages database
-                dispatch(clearDB(user));
-                // check if user is deleted from search database and messages database
-            }
-            else if(state.status === "failed"){
-                // console.log(state.error);
-                // and error code is Firebase: Error (auth/requires-recent-login).
-                // than re authenticate the user by dispatching login action
-
-            }
-        }catch(err){
-            console.log(err);
         }
-        
-        
+    }
+
+    function handleClick(action) {
+        dispatch(setPopup(true));
+        dispatcher({type: action});
     }
     return (
-        <section className={style.settings}>
-            <ProfileInfo />
-            <SettingCard icon="badge" label="Personal information">
-                <SettingItem icon="mail" label="Email" action={true} />
-                <SettingItem icon="alternate_email" label="Username" action={true} />
-            </SettingCard>
+        <>
+            <section className={style.settings}>
+                <ProfileInfo />
+                <div className={style.card}>          
+                    <div className={style.body}>       
+                        <SettingItem icon="alternate_email" text="Change username" onClick={()=> navigate("/settings/change-username")}/>
+                        <SettingItem
+                            icon={!isLinkActive ? "play_arrow" : "pause_circle"}
+                            text= {isLinkActive ? "Pause your link" : "Activate your link"}
+                            onClick={() => handleClick("link")}  
+                            
+                        />
+                        <SettingItem icon="logout" text="Logout" onClick={() => handleClick("logout")}  />
+                        <SettingItem icon="delete" text="Delete account" danger={true} onClick={() => handleClick("delete")} />
+                   
+                    </div>
+                </div>
+            </section>
 
-            <SettingCard icon="security" label="Safety controls">
-                <SettingItem icon="eda" label="Pause my link" action={true} />
-                <SettingItem icon="local_police" label="Advance filtering" action={true} />
-            </SettingCard>
-
-            <SettingCard icon="book_4_spark" label="More info">
-                <SettingItem icon="network_intelligence" label="Developer information" action={true} />
-                <SettingItem icon="lens_blur" label="Terms of use" action={true} />
-                <SettingItem icon="eco" label="Privacy policy" action={true} />
-            </SettingCard>
-
-            <SettingCard icon="warning" label="Danger zone" danger={true}>
-                <SettingItem icon="logout" label="Logout" action={true} danger={true} onClick={handleLogout}/>
-                <SettingItem icon="delete" label="Delete account" action={true} danger={true}  onClick={handleDeleteAccount }/>
-            </SettingCard>
-        </section>
+            {/* Popup dialog */}
+            <Popup>
+                <Confirmation isDanger={popupBox.danger} btnText={popupBox.btnText} title={popupBox.title} msg={popupBox.msg} action={popupBox.action} />
+            </Popup>
+        </>
     );
 }
+

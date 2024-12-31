@@ -30,12 +30,11 @@ export default function Message() {
     );
 }
 
-// Helper function to validate location state
+
 function isValidState(state) {
     return state && state.data && state.flow;
 }
 
-// Helper function to format message data
 function formatMessageData(msg, timestamp) {
     const { date, time } = getRelativeTime(timestamp, true);
     return { msg, date, time };

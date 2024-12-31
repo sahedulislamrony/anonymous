@@ -18,7 +18,6 @@ export default function Profile() {
     return (
         <div className={style.profile}>
            
-            {/* <ProfileInfo /> */}
             <CardSlider />
             <div className={style.new}>
                 <div className={style.btngroup} onClick={handleClick}>

@@ -74,6 +74,10 @@
     padding-right: 0;
     border-bottom-left-radius: $curve;
     border-bottom-right-radius: $curve;
+
+    &.noLink {
+      @include bgEffect2;
+    }
   }
 
   .main {
@@ -86,12 +90,17 @@
 
     .text {
       @include font(600, normal);
+      // width: 100%; // cause an error in home card
       white-space: pre-wrap;
-      word-break: break-all;
-      word-wrap: break-word;
+      // word-break: break-all;
+      // word-wrap: break-word;
       font-size: 1.6rem;
       padding: 1rem;
-      text-align: left;
+      text-align: center;
+    }
+
+    &.noLink {
+      @include bgEffect2;
     }
   }
 }
@@ -104,6 +113,7 @@
   align-items: center;
   flex-direction: column;
   gap: 1rem;
+  background-color: $bg-main;
 
   .btn {
     background-color: transparent;

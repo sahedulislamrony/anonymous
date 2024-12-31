@@ -1,11 +1,14 @@
 // colors
 $bg-main: #0e1217;
 $bg-card: #1c1f26;
-$text: #f5f5f5;
+$text: #f0f0f0;
 $curve: 5px;
 
+$bg-card: $bg-main;
+
 // sizes
-$app-width: 480px;
+// $app-width: 480px;
+$app-width: 600px;
 
 // mixins
 
@@ -30,4 +33,23 @@ $app-width: 480px;
   display: grid;
   place-items: center;
   overflow: hidden;
+}
+
+@mixin bgEffect() {
+  background-image: radial-gradient(#00ccff41 0.5px, transparent 0.5px),
+    radial-gradient(#00ccff65 0.5px, #e5e5f700 0.5px);
+  background-size: 20px 20px;
+  background-position: 0 0, 10px 10px;
+}
+
+@mixin bgEffect2() {
+  background-color: $bg-main;
+  background-size: 20px 20px;
+  background-image: repeating-linear-gradient(
+    0deg,
+    #444df722,
+    #444df722 1px,
+    #e5e5f700 1px,
+    #e5e5f700
+  );
 }

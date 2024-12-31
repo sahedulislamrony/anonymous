@@ -39,12 +39,12 @@ const ask = (query) => {
 const main = async () => {
     run("git add . && git commit");
     const shouldPush = await ask(
-        "Do you want to push to your main branch (remote)?",
+        "Do you want to push to your upstream branch (remote)?",
     );
 
     // Act based on user input
     if (shouldPush) {
-        run("git push -u origin main");
+        run("git push");
         process.stdout.write(chalk.green("Changes were pushed successfully.\n"));
     } else {
         console.log(chalk.yellow("Aborted. No changes were pushed."));

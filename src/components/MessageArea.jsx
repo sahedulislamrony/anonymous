@@ -10,7 +10,7 @@ export default function MessageArea() {
     const dispatch = useDispatch();
     const navigate = useNavigate();
     const {userInfo: user} = useSelector((state) => state.user);
-    const { username , photoURL , isVerified , uid} = user || {};
+    const { username , photoURL , isVerified , uid } = user || {};
     const title = `@${username}`;
 
     //  local states of form
@@ -29,8 +29,7 @@ export default function MessageArea() {
             setStatus("loading");
 
             // send message
-            const [response] = await Promise.all([dispatch(send({uid , msg})),loadingEffect(800)]);
-            console.log(response.payload);
+            const [response] = await Promise.all([dispatch(send({uid , msg })),loadingEffect(800)]);
             if (response.payload.status === "error") {
                 throw new Error(response.error);
             } 

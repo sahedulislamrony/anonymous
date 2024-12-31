@@ -1,4 +1,5 @@
 import { createAsyncThunk, createSlice } from "@reduxjs/toolkit";
+import { decryptMessage } from "../../utils/encryption";
 import clearUserDB from "./clearUserDB";
 import getMsg from "./getMsg";
 import removeMsg from "./removeMsg";
@@ -39,12 +40,34 @@ export const send = createAsyncThunk("data/send", async (userData, { rejectWithV
     }
 });
 
-export const get = createAsyncThunk("data/get", async (UID, { rejectWithValue }) => {
+
+export const get = createAsyncThunk("data/get", async ({ UID, PRIVATE_KEY }, { rejectWithValue }) => {
     try {
-        const user = await getMsg(UID);
-        return user;
+        let msgData = await getMsg(UID); 
+
+        // Decrypt messages
+        msgData = await Promise.all(
+            msgData.map(async (msg) => {
+                const { encryptedMsg, ...rest } = msg;
+                try {
+                    const decryptedMsg = await decryptMessage(PRIVATE_KEY, encryptedMsg);
+                    return {
+                        ...rest,
+                        msg: decryptedMsg,
+                    };
+                } catch (error) {
+                    return {
+                        ...rest,
+                        msg: "Failed to decrypt message",
+                        error: error.message,
+                    };
+                }
+            }),
+        );
+
+        return msgData; 
     } catch (error) {
-        return rejectWithValue(error.message);
+        return rejectWithValue(error.message); 
     }
 });
 

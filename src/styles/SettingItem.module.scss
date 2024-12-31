@@ -1,125 +1,126 @@
 @use "root" as *;
 
-.item {
-  margin-top: 1rem;
-  margin-bottom: 1rem;
-  width: 100%;
-  height: 4rem;
-  display: flex;
-  flex-direction: row;
-  cursor: pointer;
-  .text {
-    width: 85%;
-    height: 100%;
-    display: flex;
-    justify-content: flex-start;
-    align-items: center;
-    padding-left: 0.4rem;
+@property --angle {
+  syntax: "<angle>";
+  inherits: false;
+  initial-value: 0deg;
+}
+$curve: 0.5rem;
 
-    .p {
-      @include font(600, normal);
-      color: $text;
-      font-size: 1.6rem;
-      text-overflow: ellipsis;
-      word-break: break-all;
+.item {
+  -webkit-tap-highlight-color: transparent;
+  touch-action: manipulation;
+  cursor: pointer;
+  width: 80%;
+  height: 5rem;
+  border-radius: $curve;
+  position: relative;
+
+  .group {
+    z-index: 33;
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    width: 100%;
+    height: 100%;
+    background-color: $bg-main;
+    border-radius: $curve;
+    display: flex;
+    align-items: center;
+    justify-content: flex-start;
+
+    &:hover {
+      cursor: pointer;
+      color: #0ea5e9;
+      .btn {
+        color: #0ea5e9;
+      }
     }
   }
-
-  .iconL,
-  .iconR {
-    cursor: pointer;
-    user-select: none;
-    width: 5rem;
+  .icon {
     height: 100%;
+    width: 5rem;
     display: grid;
     place-items: center;
     user-select: none;
-    color: $text;
   }
 
-  .iconL {
-    width: 6rem;
-    .wrapper {
-      @include circle(3.5rem);
-      overflow: visible;
-      position: relative;
+  .btn {
+    all: unset;
+    outline: none;
+    @include font(600, normal);
+    font-size: 1.5rem;
+    color: $text;
+    border: none;
 
-      &::before,
-      &:after {
-        z-index: 22;
-        content: "";
-        position: absolute;
-        top: 50%;
-        left: 50%;
-        width: 100%;
-        height: 100%;
-        transform: translate(-50%, -50%);
-        border-radius: 50%;
-        padding: 0.1rem;
-        background-image: conic-gradient(from 0deg, #0a77b6, #0a77b6);
-      }
-
-      .icon {
-        background-color: #272a30;
-        z-index: 33;
-        width: 100%;
-        height: 100%;
-        border-radius: 50%;
-        display: grid;
-        place-items: center;
-        span {
-          font-size: 2.3rem;
-        }
-      }
+    &:focus,
+    &:active {
+      outline: none;
     }
   }
 
-  .iconR {
-    .wrapper {
-      @include circle(3.5rem);
+  .bg {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    width: 100%;
+    height: 100%;
 
-      span {
-        font-size: 1.8rem;
-      }
-
-      &:hover {
-        background-color: rgba(255, 255, 255, 0.1);
-      }
+    &::before,
+    &:after {
+      z-index: 22;
+      content: "";
+      position: absolute;
+      top: 50%;
+      left: 50%;
+      width: 100%;
+      height: 100%;
+      transform: translate(-50%, -50%);
+      border-radius: $curve;
+      padding: 0.1rem;
+      background-image: conic-gradient(
+        from var(--angle),
+        #0ea5e9,
+        #581c87,
+        #8426cb,
+        #0ea5e9
+      );
+      animation: rotate 5s linear infinite;
     }
   }
 
   &:hover {
-    opacity: 0.5;
-    .iconL .wrapper::before {
+    cursor: pointer;
+    .bg::before {
       filter: blur(1.5rem);
       opacity: 0.3;
     }
   }
 }
-
 .item.danger {
-  .text .p {
-    color: #ef3030;
-  }
-
-  .iconL {
-    .wrapper {
-      &::before,
-      &::after {
-        background-image: conic-gradient(from 0deg, #ef3030, #ef3030);
-      }
-
-      .icon span {
-        color: #ef3030;
-      }
+  .group {
+    color: #ff0000;
+    .btn {
+      color: #ff0000;
     }
   }
-
-  .iconR {
-    .wrapper {
-      span {
-        color: #ef3030;
-      }
-    }
+  .bg::before,
+  .bg::after {
+    background-image: conic-gradient(
+      from var(--angle),
+      #ff0000,
+      #ff7300,
+      #ff0000
+    );
+  }
+}
+@keyframes rotate {
+  0% {
+    --angle: 0deg;
+  }
+  100% {
+    --angle: 360deg;
   }
 }

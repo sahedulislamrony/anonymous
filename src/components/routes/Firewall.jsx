@@ -3,3 +3,5 @@ export default function Firewall() {
         <h1>Firewall</h1>
     );
 }
+
+// implementations are hidden for security reasons

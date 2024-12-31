@@ -1,0 +1,94 @@
+@use "root" as *;
+
+.confirmation {
+  width: 100%;
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+
+  .title {
+    @include font(700, normal);
+    font-size: 2rem;
+    background-image: linear-gradient(to left, #bfa7d1, #0ea5e9);
+    background-clip: text;
+    color: transparent;
+    padding-bottom: 1.8rem;
+    padding-top: 3rem;
+    width: fit-content;
+  }
+
+  .wrapper {
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+
+    .msg {
+      @include font(500, normal);
+      font-size: 1.5rem;
+      color: $text;
+      padding: 0 2rem;
+      text-align: center;
+    }
+
+    .btnGroup {
+      width: 100%;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      gap: 2rem;
+      margin-top: 3rem;
+      margin-bottom: 2rem;
+
+      .btn {
+        all: unset;
+        @include font(600, normal);
+        font-size: 1.6rem;
+        color: $text;
+        border-radius: $curve;
+        cursor: pointer;
+        transition: all 0.3s;
+        height: 4rem;
+        width: 10rem;
+        display: grid;
+        place-items: center;
+        background-color: #080808;
+
+        &:hover {
+          text-decoration: underline;
+          color: #0ea5e9;
+        }
+
+        &.safe {
+          background-color: #0ea5e9;
+          color: $bg-main;
+        }
+        &.danger {
+          background-color: #ff0000c4;
+          color: #010101;
+        }
+      }
+    }
+
+    // processing
+    .processing {
+      width: 100%;
+      padding-bottom: 3rem;
+      display: grid;
+      place-items: center;
+
+      .loader {
+        @include circle(8rem);
+        .img {
+          width: 100%;
+          height: 100%;
+          object-fit: cover;
+          object-position: cover;
+        }
+      }
+    }
+  }
+}

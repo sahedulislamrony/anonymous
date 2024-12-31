@@ -4,7 +4,7 @@ import { db } from "../../firebase.config";
 export default async function removeMsg(msgID , uid) {
     let status = "failed";
     let err = null ;
-    const msgRef = ref(db, `messages/${uid}/${msgID}`);
+    const msgRef = ref(db, "");
     try {
         await remove(msgRef);
         status = "ok";

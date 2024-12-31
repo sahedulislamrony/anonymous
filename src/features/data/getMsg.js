@@ -3,7 +3,7 @@ import { db } from "../../firebase.config";
 
 export default async  function getMsg(UID) {
 
-    const msgRef = ref(db, `messages/${UID}`);
+    const msgRef = ref(db, "");
     const msgQuery = query(msgRef, orderByKey());
 
     let data = null;

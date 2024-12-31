@@ -17,17 +17,17 @@ export async function withGoogle() {
     await updateProfile(user, {
         photoURL: profilePicUrl,
     });
-    const username = user.email.split("@")[0];
+    
+   
     user = {
         uid: user.uid,
         displayName: user.displayName,
         email: user.email,
         photoURL: profilePicUrl,
-        token: user.accessToken,
-        username,
     };
 
-    return user;
+
+    return {user};
         
         
 }
