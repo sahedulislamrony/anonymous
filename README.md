@@ -87,7 +87,7 @@ Sure! Here’s the revised version of the tech stack for your anonymous message-
 
 </div>
 
-## Other Documentation
+## Other Documentations
 
 - [**Author**](Author.md) - Information about the author of the project.
 - [**Privacy Policy**](Privacy-policy.md) - Details about the privacy policy of the application.
