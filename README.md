@@ -69,6 +69,10 @@ Sure! Here’s the revised version of the tech stack for your anonymous message-
 - **GitHub:** A platform for hosting and sharing the project’s code repository.
 - **Visual Studio Code:** A powerful code editor for writing and managing the app's code.
 
+
+## Express your Thoughts ✨
+🎉 **Send me a message** : **[@sahed](https://getmsg.netlify.app/sahed)** 😍
+
 ## Demo
 
 <div align="center">
