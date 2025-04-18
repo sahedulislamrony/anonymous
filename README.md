@@ -96,3 +96,5 @@ Sure! Here’s the revised version of the tech stack for your anonymous message-
 - [**Author**](Author.md) - Information about the author of the project.
 - [**Privacy Policy**](Privacy-policy.md) - Details about the privacy policy of the application.
 - [**Terms of Use**](Terms-of-service.md) - Terms and conditions for using the application.
+
+  <!-- GitAds-Verify: XT5IGKJHVE42AYB7J17BDRT6X7FLZR5H -->
