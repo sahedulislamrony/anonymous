@@ -22,15 +22,6 @@ Anonymous
 - **Routing:** Managed with React Router DOM for seamless navigation.
 - **No App:** No need to install any app, everything is web-based.
 
-## Under Development Features
-
-1. **Anonymous Instance Creation:** Users can create anonymous instances using Firebase Authentication.
-2. **In-App Replies:** Users can reply to messages within the app without needing Facebook or Instagram.
-3. **Reply Viewing:** Senders can see replies without creating an account.
-4. **Message Download:** Users can download specific messages in image format.
-
-Sure! Here’s the revised version of the tech stack for your anonymous message-sending app:
-
 ---
 
 ## Tech Stack & Tools
